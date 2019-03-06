@@ -1,0 +1,3653 @@
+var Requestorname;
+var IDofNewItem;
+var RequestStatus = "";
+var Requestorjob;
+var RequestID, Outcome = "";
+
+var RequestIDwithlink;
+var issueDate = new Date();
+var EntityName;
+var Requestordept;
+var coordinatorname;
+var contactnumber;
+var budgetvalue;
+var resonstogivebonuses;
+var BonusDistributeCriteria;
+var mobilenum;
+var BonusDistributeCriteria;
+var noofempgettingbonusses;
+var nooflocals;
+var noofnonlocals;
+var percentageodEmirization;
+var percentageofemployeegood = 0;
+var percentageofemployeeexcellence = 0;
+var percentageofemployeeacceptable = 0;
+var percentageofemployeeverygood = 0
+var percentageofempweak = 0
+var percentageofemployeegoody;
+var percentageofemployeeexcellencey;
+var percentageofemployeeacceptabley;
+var percentageofemployeeverygoody;
+var percentageofempweaky;
+var PrivateContractEmployeenumber;
+var emailid;
+var noofemplocpricontract;
+var noofemplocpercontract;
+var noofempnonlocpricontract;
+var noofempnonlocpercontract;
+var budgetdocyesnoval = "";
+var PrivateContractyesnoval = "";
+var entityattachmentsforyearval;
+var achivementsval;
+var year1;
+var year2;
+var TotalIncome2ndYearval, TotalIncomeIstYearval, evaluationtotalval;
+var appWebUrl, hostWebUrl;
+var fileinput;
+var validationflag = 0;
+var errorval = "";
+var attachmentFiles, element, elementlogo, elementbalancescorecard, elementfinancialstatement, elementtaxsummary, elementbudget, elementevaluation, elementcontrats, elementempdetails, elementstudydetails;
+var oldornew = 0;
+var reqid;
+var entitylogofiles, gsfiles, budgetfilenames, balancenames, financialnames, taxnames, contractnames, evaluationnames, empdetailfiles, studyfiles;
+var idofitem;
+var entitylogofiles1, gradensaleriesfilenames, budegetfilenames, balancefilenames, financialfilenames, taxfilenames, evaluationfilenames, allcontractsfilenames;
+var languageis;
+var taskid;
+	var uploadArray = [];
+	var uploadArrayEntityLogo = [], removedArrayEntityLogo = [];
+	var uploadArrayGradensalaryid = [], removedArrayGradensalaryid = [];
+	var uploadArraybudgetdocid = [], removedArraybudgetdocid = [];
+	var uploadArraybalancescorecardid = [], removedArraybalancescorecardid = [];
+	var uploadArrayfinancialstatementid = [], removedArrayfinancialstatementid = [];
+	var uploadArraytaxsummaryid = [], removedArraytaxsummaryid = [];
+	var uploadArrayresultsofevaluationid = [], removedArrayresultsofevaluationid = [];
+	var uploadArrayallcontractsid = [], removedArrayallcontractsid = [];
+	var uploadArrayEmployeedetailsid = [], removedArrayEmployeedetailsid = [];
+	var uploadArraystydyfileid = [], removedArraystydyfileid = [];
+$(document).ready(function () {
+
+	// var uploadArray = [];
+	// var uploadArrayEntityLogo = [], removedArrayEntityLogo = [];
+	// var uploadArrayGradensalaryid = [], removedArrayGradensalaryid = [];
+	// var uploadArraybudgetdocid = [], removedArraybudgetdocid = [];
+	// var uploadArraybalancescorecardid = [], removedArraybalancescorecardid = [];
+	// var uploadArrayfinancialstatementid = [], removedArrayfinancialstatementid = [];
+	// var uploadArraytaxsummaryid = [], removedArraytaxsummaryid = [];
+	// var uploadArrayresultsofevaluationid = [], removedArrayresultsofevaluationid = [];
+	// var uploadArrayallcontractsid = [], removedArrayallcontractsid = [];
+	// var uploadArrayEmployeedetailsid = [], removedArrayEmployeedetailsid = [];
+	// var uploadArraystydyfileid = [], removedArraystydyfileid = [];
+
+	function animateAndHide(el) {
+
+		el.animate({ opacity: '0' }, 150, function () {
+
+			el.animate({ height: '0px' }, 150, function () {
+
+				el.remove();
+
+			});
+
+		});
+
+	}
+
+	function createStructure(id, uploadArray, removeFile, customFileSpan) {
+
+		let disp = '<ul class="list-group">';
+
+		let input = document.getElementById(id);
+
+		for (let x = 0; x < uploadArray.length; x++) {
+
+			let temp = uploadArray[x].split(".");
+
+			temp = temp[temp.length - 1];
+
+			if (x % 2 == 0) {
+
+				disp += '<li class="list-group-item" style="background-color: #CCC;overflow:hidden;">' + uploadArray[x] + '<i style="margin-left: 15px;" id="deleteFile' + x + '" class="glyphicon glyphicon-trash pull-right ' + removeFile + '"></i></li>';
+
+			}
+			else {
+
+				disp += '<li class="list-group-item">' + uploadArray[x] + '<i style="margin-left: 15px;" id="deleteFile' + x + '" class="glyphicon glyphicon-trash pull-right ' + removeFile + '"></i></li>';
+
+			}
+
+		}
+
+		disp += '</ul>';
+
+		$("." + customFileSpan).html(disp);
+
+	}
+
+	$("body").on("change", "#Entitylogofileid", function (name) {
+
+		
+		let id = $(this).attr('id');
+
+		uploadArrayEntityLogo = [];
+
+		removedArray = [];
+
+		setTimeout(function () {
+
+			for (let x = 0; x < $('#Entitylogofileid')[0].files.length; x++) {
+
+				let temp = $('#Entitylogofileid')[0].files[x].name.split('.')
+
+				temp = temp[temp.length - 1]
+				temp=temp.toLowerCase();
+
+				if (temp == 'jpeg' || temp == 'png' || temp == 'bmp' || temp == 'jpg') {
+
+					uploadArrayEntityLogo.push($('#Entitylogofileid')[0].files[x].name);
+
+				}
+				else {
+
+					removedArrayEntityLogo.push($('#Entitylogofileid')[0].files[x].name);
+
+				}
+
+				if(uploadArrayEntityLogo.length > 0){
+					$('#Error_Entitylogofileid').hide();
+				}else{
+					$('#Error_Entitylogofileid').show();
+				}
+
+			}
+
+			setTimeout(function () {
+
+				createStructure(id, uploadArrayEntityLogo, 'removeFileEntityLogo', 'custom-Entitylogofileid-upload');
+
+			}, 200);
+
+		}, 200);
+
+	});
+
+	$("body").on("click", ".removeFileEntityLogo", function () {
+
+		let id = $(this).attr('id');
+
+		let index = id.charAt(id.length - 1);
+
+		removedArrayEntityLogo.push(uploadArrayEntityLogo.splice(index, 1));
+
+		uploadArrayEntityLogo.pop(uploadArrayEntityLogo.splice(index, 1));
+
+		var el = $(this).closest('li');
+
+		animateAndHide(el);
+
+		setTimeout(function () {
+
+			createStructure(id, removedArrayEntityLogo, 'removeFileEntityLogo', 'custom-Entitylogofileid-upload');
+
+		}, 200);
+
+	});
+
+	$("body").on("change", "#Gradensalaryid", function (name) {
+
+		
+		let id = $(this).attr('id');
+
+		uploadArrayGradensalaryid = [];
+
+		removedArray = [];
+
+		setTimeout(function () {
+
+			for (let x = 0; x < $('#Gradensalaryid')[0].files.length; x++) {
+
+				uploadArrayGradensalaryid.push($('#Gradensalaryid')[0].files[x].name);
+
+			}
+
+			if(uploadArrayGradensalaryid.length > 0){
+				$('#Error_Gradensalaryid').hide();
+			}else{
+				$('#Error_Gradensalaryid').show();
+			}
+
+			setTimeout(function () {
+
+				createStructure(id, uploadArrayGradensalaryid, 'removeFileGradensalaryid', 'custom-Gradensalaryid-upload');
+
+			}, 200);
+
+		}, 200);
+
+	});
+
+	$("body").on("click", ".removeFileGradensalaryid", function () {
+
+		let id = $(this).attr('id');
+
+		let index = id.charAt(id.length - 1);
+
+		removedArrayGradensalaryid.push(uploadArrayGradensalaryid.splice(index, 1));
+
+		uploadArrayGradensalaryid.pop(uploadArrayGradensalaryid.splice(index, 1));
+
+		var el = $(this).closest('li');
+
+		animateAndHide(el);
+
+		setTimeout(function () {
+
+			createStructure(id, removedArrayGradensalaryid, 'removeFileGradensalaryid', 'custom-Gradensalaryid-upload');
+
+		}, 200);
+
+	});
+
+	$("body").on("change", "#budgetdocid", function (name) {
+
+		
+		let id = $(this).attr('id');
+
+		uploadArraybudgetdocid = [];
+
+		removedArray = [];
+
+		setTimeout(function () {
+
+			for (let x = 0; x < $('#budgetdocid')[0].files.length; x++) {
+
+				uploadArraybudgetdocid.push($('#budgetdocid')[0].files[x].name);
+
+			}
+
+			if(uploadArraybudgetdocid.length > 0){
+				$('#Error_budgetdocid').hide();
+			}else {
+				$('#Error_budgetdocid').show();
+			}
+
+			setTimeout(function () {
+
+				createStructure(id, uploadArraybudgetdocid, 'removeFilebudgetdocid', 'custom-budgetdocid-upload');
+
+			}, 200);
+
+		}, 200);
+
+	});
+
+	$("body").on("click", ".removeFilebudgetdocid", function () {
+
+		let id = $(this).attr('id');
+
+		let index = id.charAt(id.length - 1);
+
+		removedArraybudgetdocid.push(uploadArraybudgetdocid.splice(index, 1));
+
+		var el = $(this).closest('li');
+
+		animateAndHide(el);
+
+		setTimeout(function () {
+
+			createStructure(id, removedArraybudgetdocid, 'removeFilebudgetdocid', 'custom-budgetdocid-upload');
+
+		}, 200);
+
+	});
+
+	$("body").on("change", "#balancescorecardid", function (name) {
+
+		
+		let id = $(this).attr('id');
+
+		uploadArraybalancescorecardid = [];
+
+		removedArray = [];
+
+		setTimeout(function () {
+
+			for (let x = 0; x < $('#balancescorecardid')[0].files.length; x++) {
+
+				uploadArraybalancescorecardid.push($('#balancescorecardid')[0].files[x].name);
+
+			}
+
+			if(uploadArraybalancescorecardid.length > 0){
+				$('#Error_balancescorecardid').hide();
+			}else{
+				$('#Error_balancescorecardid').show();
+			}
+
+			setTimeout(function () {
+
+				createStructure(id, uploadArraybalancescorecardid, 'removeFilebalancescorecardid', 'custom-balancescorecardid-upload');
+
+			}, 200);
+
+		}, 200);
+
+	});
+
+	$("body").on("click", ".removeFilebalancescorecardid", function () {
+
+		let id = $(this).attr('id');
+
+		let index = id.charAt(id.length - 1);
+
+		removedArraybalancescorecardid.push(uploadArraybalancescorecardid.splice(index, 1));
+
+		var el = $(this).closest('li');
+
+		animateAndHide(el);
+
+		setTimeout(function () {
+
+			createStructure(id, removedArraybalancescorecardid, 'removeFilebalancescorecardid', 'custom-balancescorecardid-upload');
+
+		}, 200);
+
+	});
+
+	$("body").on("change", "#financialstatementid", function (name) {
+
+		
+		let id = $(this).attr('id');
+
+		uploadArrayfinancialstatementid = [];
+
+		removedArray = [];
+
+		setTimeout(function () {
+
+			for (let x = 0; x < $('#financialstatementid')[0].files.length; x++) {
+
+				uploadArrayfinancialstatementid.push($('#financialstatementid')[0].files[x].name);
+
+			}
+
+			if(uploadArrayfinancialstatementid.length > 0){
+				$('#Error_financialstatementid').hide();
+			}else{
+				$('#Error_financialstatementid').show();
+			}
+
+			setTimeout(function () {
+
+				createStructure(id, uploadArrayfinancialstatementid, 'removeFilefinancialstatementid', 'custom-financialstatementid-upload');
+
+			}, 200);
+
+		}, 200);
+
+	});
+
+	$("body").on("click", ".removeFilefinancialstatementid", function () {
+
+		let id = $(this).attr('id');
+
+		let index = id.charAt(id.length - 1);
+
+		removedArrayfinancialstatementid.push(uploadArrayfinancialstatementid.splice(index, 1));
+
+		var el = $(this).closest('li');
+
+		animateAndHide(el);
+
+		setTimeout(function () {
+
+			createStructure(id, removedArrayfinancialstatementid, 'removeFilefinancialstatementid', 'custom-financialstatementid-upload');
+
+		}, 200);
+
+	});
+
+	$("body").on("change", "#taxsummaryid", function (name) {
+
+		
+		let id = $(this).attr('id');
+
+		uploadArraytaxsummaryid = [];
+
+		removedArray = [];
+
+		setTimeout(function () {
+
+			for (let x = 0; x < $('#taxsummaryid')[0].files.length; x++) {
+
+				uploadArraytaxsummaryid.push($('#taxsummaryid')[0].files[x].name);
+
+			}
+
+			if(uploadArraytaxsummaryid.length > 0){
+				$('#Error_taxsummaryid').hide();
+			}else{
+				$('#Error_taxsummaryid').show();
+			}
+
+			setTimeout(function () {
+
+				createStructure(id, uploadArraytaxsummaryid, 'removeFiletaxsummaryid', 'custom-taxsummaryid-upload');
+
+			}, 200);
+
+		}, 200);
+
+	});
+
+	$("body").on("click", ".removeFiletaxsummaryid", function () {
+
+		let id = $(this).attr('id');
+
+		let index = id.charAt(id.length - 1);
+
+		removedArraytaxsummaryid.push(uploadArraytaxsummaryid.splice(index, 1));
+
+		var el = $(this).closest('li');
+
+		animateAndHide(el);
+
+		setTimeout(function () {
+
+			createStructure(id, removedArraytaxsummaryid, 'removeFiletaxsummaryid', 'custom-taxsummaryid-upload');
+
+		}, 200);
+
+	});
+
+	$("body").on("change", "#resultsofevaluationid", function (name) {
+
+		
+		let id = $(this).attr('id');
+
+		uploadArrayresultsofevaluationid = [];
+
+		removedArray = [];
+
+		setTimeout(function () {
+
+			for (let x = 0; x < $('#resultsofevaluationid')[0].files.length; x++) {
+
+				uploadArrayresultsofevaluationid.push($('#resultsofevaluationid')[0].files[x].name);
+
+			}
+
+			if(uploadArrayresultsofevaluationid.length > 0){
+				$('#Error_resultsofevaluationid').hide();
+			}else{
+				$('#Error_resultsofevaluationid').show();
+			}
+
+			setTimeout(function () {
+
+				createStructure(id, uploadArrayresultsofevaluationid, 'removeFileresultsofevaluationid', 'custom-resultsofevaluationid-upload');
+
+			}, 200);
+
+		}, 200);
+
+	});
+
+	$("body").on("click", ".removeFileresultsofevaluationid", function () {
+
+		let id = $(this).attr('id');
+
+		let index = id.charAt(id.length - 1);
+
+		removedArrayresultsofevaluationid.push(uploadArrayresultsofevaluationid.splice(index, 1));
+
+		var el = $(this).closest('li');
+
+		animateAndHide(el);
+
+		setTimeout(function () {
+
+			createStructure(id, removedArrayresultsofevaluationid, 'removeFileresultsofevaluationid', 'custom-resultsofevaluationid-upload');
+
+		}, 200);
+
+	});
+
+	$("body").on("change", "#allcontractsid", function (name) {
+
+		
+		let id = $(this).attr('id');
+
+		uploadArrayallcontractsid = [];
+
+		removedArray = [];
+
+		setTimeout(function () {
+
+			for (let x = 0; x < $('#allcontractsid')[0].files.length; x++) {
+
+				uploadArrayallcontractsid.push($('#allcontractsid')[0].files[x].name);
+
+			}
+
+			if(uploadArrayallcontractsid.length > 0){
+				$('#Error_allcontractsid').hide();
+			}else{
+				$('#Error_allcontractsid').show();
+			}
+
+			setTimeout(function () {
+
+				createStructure(id, uploadArrayallcontractsid, 'removeFileallcontractsid', 'custom-allcontractsid-upload');
+
+			}, 200);
+
+		}, 200);
+
+	});
+
+	$("body").on("click", ".removeFileallcontractsid", function () {
+
+		let id = $(this).attr('id');
+
+		let index = id.charAt(id.length - 1);
+
+		removedArrayallcontractsid.push(uploadArrayallcontractsid.splice(index, 1));
+
+		var el = $(this).closest('li');
+
+		animateAndHide(el);
+
+		setTimeout(function () {
+
+			createStructure(id, removedArrayallcontractsid, 'removeFileallcontractsid', 'custom-allcontractsid-upload');
+
+		}, 200);
+
+	});
+
+	$("body").on("change", "#Employeedetailsid", function (name) {
+
+		
+		let id = $(this).attr('id');
+
+		uploadArrayEmployeedetailsid = [];
+
+		removedArray = [];
+
+		setTimeout(function () {
+
+			for (let x = 0; x < $('#Employeedetailsid')[0].files.length; x++) {
+
+				let temp = $('#Employeedetailsid')[0].files[x].name.split('.')
+
+				temp = temp[temp.length - 1]
+
+				if (temp == 'xls' || temp == 'xlsx') {
+
+					uploadArrayEmployeedetailsid.push($('#Employeedetailsid')[0].files[x].name);
+
+				}
+				else {
+
+					removedArrayEmployeedetailsid.push($('#Employeedetailsid')[0].files[x].name);
+
+				}
+
+			}
+
+			if(uploadArrayEmployeedetailsid.length > 0){
+				$('#Error_Employeedetailsid').hide();
+			}else{
+				$('#Error_Employeedetailsid').show();
+			}
+
+			setTimeout(function () {
+
+				createStructure(id, uploadArrayEmployeedetailsid, 'removeFileEmployeedetailsid', 'custom-Employeedetailsid-upload');
+
+			}, 200);
+
+		}, 200);
+
+	});
+
+	$("body").on("click", ".removeFileEmployeedetailsid", function () {
+
+		let id = $(this).attr('id');
+
+		let index = id.charAt(id.length - 1);
+
+		removedArrayEmployeedetailsid.push(uploadArrayEmployeedetailsid.splice(index, 1));
+
+		var el = $(this).closest('li');
+
+		animateAndHide(el);
+
+		setTimeout(function () {
+
+			createStructure(id, removedArrayEmployeedetailsid, 'removeFileEmployeedetailsid', 'custom-Employeedetailsid-upload');
+
+		}, 200);
+
+	});
+
+	$("body").on("change", "#stydyfileid", function (name) {
+
+		
+		let id = $(this).attr('id');
+
+		uploadArraystydyfileid = [];
+
+		removedArray = [];
+
+		setTimeout(function () {
+
+			for (let x = 0; x < $('#stydyfileid')[0].files.length; x++) {
+
+				uploadArraystydyfileid.push($('#stydyfileid')[0].files[x].name);
+
+			}
+
+			if(uploadArraystydyfileid.length > 0){
+				$('#Error_stydyfileid').hide();
+			}else{
+				$('#Error_stydyfileid').show();
+			}
+
+			setTimeout(function () {
+
+				createStructure(id, uploadArraystydyfileid, 'removeFilestydyfileid', 'custom-stydyfileid-upload');
+
+			}, 200);
+
+		}, 200);
+
+	});
+
+	$("body").on("click", ".removeFilestydyfileid", function () {
+
+		let id = $(this).attr('id');
+
+		let index = id.charAt(id.length - 1);
+
+		removedArraystydyfileid.push(uploadArraystydyfileid.splice(index, 1));
+
+		var el = $(this).closest('li');
+
+		animateAndHide(el);
+
+		setTimeout(function () {
+
+			createStructure(id, removedArraystydyfileid, 'removeFilestydyfileid', 'custom-stydyfileid-upload');
+
+		}, 200);
+
+	});
+
+
+
+
+
+	getusername();
+	getemail();
+	$("#achivementsid").val("");
+	$('#reasontopayid').val("");
+	$('#reasontopayid').trigger("click");
+	$('#achivementsid').trigger("click");
+	// Israr code 
+	//	var url1="http://hraes-uat/sites/eservices/Pages/BonusRequestform.aspx?ID=148&BonusReqID=56";
+	// var url1="http://hraes-uat/sites/eservices/Pages/BonusRequestform.aspx?BonusReqID=56";
+	// var queryParameters=url1.split('?')[1];
+	// alert(queryParameters);
+	// // Now split it by "&"
+
+	//  var parameterArray=queryParameters.split('&');
+	// if(parameterArray.lenth==0){
+	// 	var requestId=queryParameters.split("=")[1];
+	// 	alert(requestId);
+	// 	}
+	// else
+	// {
+	// var taskIdParameters=queryParameters.split('&')[0];
+	// var requestIdParameters=queryParameters.split('&')[1];
+	//  taskid=taskIdParameters.split('=')[1];
+	//  reqid=requestIdParameters.split('=')[1];
+	// alert("taskId="+taskId +"  reqId== "+reqId);
+	// }
+
+
+	//Israr code ends here
+	var url = window.location.href;
+	//alert(url);
+	// Monica
+	if (url.indexOf('?') != -1) {
+		// Monica Code
+		// 	var x=url.split('?')[1];
+		// 	var z=x.split('&')[0];
+		// 	taskid=z.split('=')[1];
+		// 	if(taskid==undefined){
+		// 	reqid=url.split('?')[1];
+		// 	getdata(reqid);
+		// }
+		// else{
+		// 	var y=x.split('&')[1];
+		// 	var id=y.split('=')[1];
+		// 	getreqid(id);
+		// }
+		// Monica code ends here
+		var queryParameters = url.split('?')[1];
+		alert(queryParameters);
+		// Now split it by "&"
+
+		var parameterArray = queryParameters.split('&');
+		if (parameterArray.lenth == 0) {
+			reqid = queryParameters.split("=")[1];
+			alert(reqid);
+			// If there is not task id  , then simply get the data
+			getdata(reqid);
+		}
+		else {
+			var taskIdParameters = queryParameters.split('&')[0];
+			var requestIdParameters = queryParameters.split('&')[1];
+			taskid = taskIdParameters.split('=')[1];
+			reqid = requestIdParameters.split('=')[1];
+			alert("taskId=" + taskid + "  reqId== " + reqid);
+			//if there is task id then get request data based on id.
+			getreqid(reqid);
+			//me
+			oldornew = 1;
+		}
+		//reqid=url.split('?')[1];
+		//gerreqid();
+		//getdata(reqid);	
+		//	oldornew = 1;
+	}
+	if (oldornew == 0) {
+		var day = issueDate.getDate()
+		var currentyear = issueDate.getFullYear()
+		var month = issueDate.getUTCMonth();
+		month = month + 1;
+		var hours = issueDate.getHours();
+		var minutes = issueDate.getMinutes();
+		var seconds = issueDate.getSeconds();
+		if (day < 10) {
+			day = '0' + day;
+		}
+		if (month < 10) {
+			month = '0' + month;
+		}
+		if (hours < 10) {
+			hours = '0' + hours;
+		}
+		if (minutes < 10) {
+			minutes = '0' + minutes;
+		}
+		if (seconds < 10) {
+			seconds = '0' + seconds;
+		}
+
+		var stamp = day + currentyear + month + hours + minutes + seconds;
+		RequestID = stamp;
+		$("#scgform1").hide();
+		$("#scgform2").hide();
+		$("#scgform3").hide();
+		$("#scgform4").hide();
+		$("#scgform5").hide();
+		$("#scgform6").hide();
+	}
+	else {
+		RequestID = reqid;
+	}
+	$("input[type='number']").on("keypress", function (e) {
+		//if(!string.fromCharcode(e.keyCode).match(/[^0-9]/g)){
+		//$(this).val()="";
+		//}
+		//return false;
+		if (e.which < 48 || e.which > 57) {
+			e.preventDefault();
+		}
+
+	});
+
+	$("#yesno2NoBtn").on("click",function() {
+
+		$("#parent_allcontractsid").hide();
+	
+	});
+	
+	$("#yesno2YesBtn").on("click",function() {
+	
+		$("#parent_allcontractsid").show();
+		setTimeout(function() {
+
+		$("#allcontractsid").hide();
+
+	},100)
+		
+	});
+	//document.getElementsByTagName("input[type='number']").addEventListener("keypress",function(evt){
+
+	//if(evt.which<48||evt.which >57){
+	//evt.preventDefault();
+	//}
+	//});
+
+	//$("#scgform1").hide();
+	//$("#scgform2").hide();
+	//$("#scgform3").hide();
+	//$("#scgform4").hide();
+	//$("#scgform5").hide();
+	//$("#scgform6").hide();
+
+
+	$('#Entitynameid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#Entitynamereadonlyid').val(txtVal);
+	});
+	$('#coordinatornameid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#coordinatornameidreadonly').val(txtVal);
+	});
+	$('#Jobnameid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#Jobnameidreadonly').val(txtVal);
+	});
+	$('#contactnumberid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#contactnumberidreadonly').val(txtVal);
+	});
+	$('#emailid').change(function (e) {
+		var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		//function IsEmail(email) {
+		//var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if (!regex.test($(this).val())) {
+			$(this).val("")
+			return false;
+		} else {
+			var txtVal = $(this).val();
+			$('#emailidreadonly').val(txtVal);
+		}
+		//}
+		//var txtVal = $(this).val();
+		//IsEmail(txtVal);
+		//$('#emailidreadonly').val(txtVal);
+	});
+
+	$('#budgetdocid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#budgetdocidreadonly').val(txtVal);
+	});
+
+	$('#reasontopayid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#reasontopayidreadonly').val(txtVal);
+	});
+	$('#entityattachmentsforyearid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#entityattachmentsforyearidreadonly').val(txtVal);
+	});
+	$('#achivementsid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#achivementsidreadonly').val(txtVal);
+	});
+
+	$('#noofempgettingbonussesid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#noofempgettingbonussesidreadonly').val(txtVal);
+	});
+	$('#noofemplocpricontractid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#noofemplocpricontractidreadonly').val(txtVal);
+	});
+	$('#noofemplocpercontractid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#noofemplocpercontractidreadonly').val(txtVal);
+	});
+	$('#noofempnonlocpricontractid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#noofempnonlocpricontractidreadonly').val(txtVal);
+	});
+	$('#noofempnonlocpercontractid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#noofempnonlocpercontractidreadonly').val(txtVal);
+	});
+	$('#year1percentageid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#year1percentageidreadonly').val(txtVal);
+	});
+	$('#year2percentageid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#year2percentageidreadonly').val(txtVal);
+	});
+	$('#year1id').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#year1idreadonly').val(txtVal);
+	});
+	$('#year2id').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#year2idreadonly').val(txtVal);
+	});
+	$('#evaluationtotalid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#evaluationtotalidreadonly').val(txtVal);
+	});
+	$("#TotalNumberofEmpid").change(function (e) {
+		$('#excellentyid').val("");
+		$('#excellentidz').val("");
+		$('#verygoodyid').val("");
+		$('#verygoodidz').val("");
+		$('#goodyid').val("");
+		$('#goodidz').val("");
+		$('#acceptableyid').val("");
+		$('#acceptableidz').val("");
+		$('#weakyid').val("");
+		$('#weakidz').val("");
+
+	});
+	$('#excellentid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#excellentidreadonly').val(txtVal);
+	});
+	$('#excellentyid').keyup(function (e) {
+		var total = $("#TotalNumberofEmpid").val();
+		var txtVal = $(this).val();
+		var percentage = ((txtVal / total) * 100)
+		$('#excellentidz').val(percentage.toFixed(2));
+		$('#excellentyidreadonly').val(percentage.toFixed(2));
+	});
+	$('#verygoodid').keyup(function (e) {
+
+		$('#verygoodidreadonly').val(txtVal);
+	});
+	$('#verygoodyid').change(function (e) {
+		var total = $("#TotalNumberofEmpid").val();
+		var txtVal = $(this).val();
+		var percentage = ((txtVal / total) * 100)
+		$('#verygoodidz').val(percentage.toFixed(2));
+		$('#verygoodyidreadonly').val(percentage.toFixed(2));
+	});
+	$('#goodid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#goodidreadonly').val(txtVal);
+	});
+	$('#goodyid').keyup(function (e) {
+		var total = $("#TotalNumberofEmpid").val();
+		var txtVal = $(this).val();
+		var percentage = ((txtVal / total) * 100)
+		$('#goodidz').val(percentage.toFixed(2));
+		$('#goodyidreadonly').val(percentage.toFixed(2));
+	});
+	$('#acceptableid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#acceptableidreadonly').val(txtVal);
+	});
+	$('#acceptableyid').keyup(function (e) {
+		var total = $("#TotalNumberofEmpid").val();
+		var txtVal = $(this).val();
+		var percentage = ((txtVal / total) * 100)
+		$('#acceptableidz').val(percentage.toFixed(2));
+		$('#acceptableyidreadonly').val(percentage.toFixed(2));
+	});
+	$('#weakid').keyup(function (e) {
+		var txtVal = $(this).val();
+		$('#weakidreadonly').val(txtVal);
+	});
+
+	$('#weakyid').keyup(function (e) {
+		var total = $("#TotalNumberofEmpid").val();
+		var txtVal = $(this).val();
+		var percentage = ((txtVal / total) * 100);
+		$('#weakidz').val(percentage.toFixed(2));
+		$('#weakyidreadonly').val(percentage.toFixed(2));
+	});
+
+
+	$("input[type='number']").click(function (e) {
+		$(this).attr('placeholder', '');
+	});
+
+	$("textarea").click(function (e) {
+		$(this).attr('placeholder', '');
+	});
+
+
+	$("input[name='yesno']").click(function () {
+		var value = $(this).val();
+		if (value == "yes") {
+			//$("#budgetdocdivid").show();
+			$(".budgetdocdivcls").show();
+		}
+		else {
+			//$("#budgetdocdivid").hide();
+			$(".budgetdocdivcls").hide();
+		}
+
+	});
+	$("input[name='yesno2']").click(function () {
+		var value = $(this).val();
+		if (value == "yes") {
+			$("#allcontractsid").show();
+		}
+		else {
+			$("#allcontractsid").hide();
+		}
+
+	});
+
+	$("#form0nextid").click(function () {
+
+		if(parseInt(uploadArrayEntityLogo.length) <= 0){
+
+			$("#Error_Entitylogofileid").show();
+			return false;
+
+		}
+		else {
+
+			$("#Error_Entitylogofileid").hide();
+
+		}
+
+		if ($('#Entitynameid').val() == "") {
+			$("#Error_Entitynameid").show();
+			return false;
+		} 
+		else {
+			$("#Error_Entitynameid").hide();
+		}
+
+		if ($('#coordinatornameid').val() == "") {
+			$("#Error_coordinatornameid").show();
+			return false;
+		} else {
+			$("#Error_coordinatornameid").hide();
+		}
+
+		if ($('#Jobnameid').val() == "") {
+			$("#Error_Jobnameid").show();
+			return false;
+		} else {
+			$("#Error_Jobnameid").hide();
+		}
+
+		if ($('#contactnumberid').val() == "") {
+
+			$("#Error_contactnumberid").show();
+			$("#Error_Validcontactnumberid").hide();
+			return false;
+
+		}
+		else {
+
+			$("#Error_contactnumberid").hide();
+
+		}
+
+		if ($('#contactnumberid').val().length == 9 || $('#contactnumberid').val().length == 10) {
+
+			console.log("In ifffff" + $('#contactnumberid').val().length);
+
+			$("#Error_Validcontactnumberid").hide();
+			
+		} else {
+
+			console.log("In elseeee" + $('#contactnumberid').val().length);
+
+			$("#Error_Validcontactnumberid").show();
+			return false;
+
+		}
+		
+		if ($('#emailid').val() == "") {
+			$("#Error_emailid").show();
+			return false;
+		} else {
+			$("#Error_emailid").hide();
+		}
+
+		$("#scgform1").show();
+		$("#scgform0").hide();
+		return false;
+
+	});
+	$("#form1nextid").click(function () {
+
+		if(parseInt(uploadArrayGradensalaryid.length) <= 0){
+
+			$("#Error_Gradensalaryid").show();
+			return false;
+
+		}
+		else {
+
+			$("#Error_Gradensalaryid").hide();
+
+		}
+		
+
+		if ($("input[name='yesno']:checked").val() == "yes") {
+			if ($('#budgetid').val() == "") {
+				$("#Error_budgetid").show();
+				return false;
+			} else {
+				$("#Error_budgetid").hide();
+			}
+		}
+		if ($('#reasontopayid').val() == "") {
+			$("#Error_reasontopayid").show();
+			return false;
+		} else {
+			$("#Error_reasontopayid").hide();
+		}
+		if ($('#achivementsid').val() == "") {
+			$("#Error_achivementsid").show();
+			return false;
+		} else {
+			$("#Error_achivementsid").hide();
+		}
+
+		if ($('#entityattachmentsforyearid').val() == "") {
+			$("#Error_entityattachmentsforyearid").show();
+			$("#Error_Validentityattachmentsforyearid").hide();
+			return false;
+		} else {
+			$("#Error_entityattachmentsforyearid").hide();
+		}
+
+		if ($('#entityattachmentsforyearid').val().length < 4 || $('#entityattachmentsforyearid').val().length > 4) {
+			$("#Error_Validentityattachmentsforyearid").show();
+			return false;
+		} else {
+			$("#Error_Validentityattachmentsforyearid").hide();
+		}
+
+		if(parseInt(uploadArraybudgetdocid.length) <= 0 && $("input[name='yesno']:checked").val() == "yes") {
+
+			$("#Error_budgetdocid").show();
+			return false;
+
+		}
+		else {
+
+			$("#Error_budgetdocid").hide();
+
+		}
+
+		if(parseInt(uploadArraybalancescorecardid.length) <= 0){
+
+			$("#Error_balancescorecardid").show();
+			return false;
+
+		}
+		else {
+
+			$("#Error_balancescorecardid").hide();
+
+		}
+		
+		if(parseInt(uploadArrayfinancialstatementid.length) <= 0){
+
+			$("#Error_financialstatementid").show();
+			return false;
+
+		}
+		else {
+
+			$("#Error_financialstatementid").hide();
+
+		}
+
+		if(parseInt(uploadArraytaxsummaryid.length) <= 0){
+
+			$("#Error_taxsummaryid").show();
+			return false;
+
+		}
+		else {
+
+			$("#Error_taxsummaryid").hide();
+
+		}
+
+		$("#scgform2").show();
+		$("#scgform1").hide();
+		return false;
+	});
+	$("#form1previd").click(function () {
+
+
+		$("#scgform0").show();
+		$("#scgform1").hide();
+		return false;
+	});
+	$("#form2nextid").click(function () {
+
+		if ($('#noofempgettingbonussesid').val() == "") {
+			$("#Error_noofempgettingbonussesid").show();
+			return false;
+		} else {
+			$("#Error_noofempgettingbonussesid").hide();
+		}
+
+		if ($('#noofempgettingbonussesid').val() <= 0) {
+			$("#Error_noofempgettingbonussesidValid").show();
+			return false;
+		} else {
+			$("#Error_noofempgettingbonussesidValid").hide();
+		}
+
+		if ($('#noofemplocpricontractid').val() == "") {
+			$("#Error_noofemplocpricontractid").show();
+			return false;
+		} else {
+			$("#Error_noofemplocpricontractid").hide();
+		}
+
+		if ($('#noofemplocpercontractid').val() == "") {
+			$("#Error_noofemplocpercontractid").show();
+			return false;
+		} else {
+			$("#Error_noofemplocpercontractid").hide();
+		}
+
+		if ($('#noofempnonlocpricontractid').val() == "") {
+			$("#Error_noofempnonlocpricontractid").show();
+			return false;
+		} else {
+			$("#Error_noofempnonlocpricontractid").hide();
+		}
+
+		if ($('#noofempnonlocpercontractid').val() == "") {
+			$("#Error_noofempnonlocpercontractid").show();
+			return false;
+		} else {
+			$("#Error_noofempnonlocpercontractid").hide();
+		}
+
+		if ($('#year1percentageid').val() == "") {
+			$("#Error_year1percentageid").show();
+			return false;
+		} else {
+			$("#Error_year1percentageid").hide();
+		}
+
+		if ($('#year1percentageid').val() > 100) {
+			$("#Error_year1percentageidValid").show();
+			$("#Error_year1percentageid").hide();
+			return false;
+		} else {
+			$("#Error_year1percentageidValid").hide();
+		}
+
+		if ($('#year2percentageid').val() == "") {
+			$("#Error_year2percentageid").show();
+			return false;
+		} else {
+			$("#Error_year2percentageid").hide();
+		}
+
+		if ($('#year2percentageid').val() > 100) {
+			$("#Error_year2percentageidValid").show();
+			$("#Error_year2percentageid").hide();
+			return false;
+		} else {
+			$("#Error_year2percentageidValid").hide();
+		}
+
+		if ($('#year1id').val() == "") {
+			$("#Error_year1id").show();
+			return false;
+		} else {
+			$("#Error_year1id").hide();
+		}
+		if ($('#year1id').val().length < 4 || $('#year1id').val().length > 4) {
+			$("#Error_Validyear1id").show();
+			return false;
+		} else {
+			$("#Error_Validyear1id").hide();
+		}
+
+		
+		if ($('#year2id').val() == "") {
+			$("#Error_year2id").show();
+			return false;
+		} else {
+			$("#Error_year2id").hide();
+		}
+		if ($('#year2id').val().length < 4 || $('#year2id').val().length > 4) {
+			$("#Error_Validyear2id").show();
+			return false;
+		} else {
+			$("#Error_Validyear2id").hide();
+		}
+
+		$("#scgform3").show();
+		$("#scgform2").hide();
+
+		return false;
+	});
+	$("#form2previd").click(function () {
+		$("#scgform1").show();
+		$("#scgform2").hide();
+		return false;
+	});
+	
+	$("#form3nextid").click(function () {
+
+		if(parseInt(uploadArrayresultsofevaluationid.length) <= 0){
+
+			$("#Error_resultsofevaluationid").show();
+			return false;
+
+		} 
+		else {
+
+			$("#Error_resultsofevaluationid").hide();
+
+		}
+
+		if (parseInt(uploadArrayallcontractsid.length) <= 0 && $("#yesno2YesBtn").is(":checked")) {
+			$("#Error_allcontractsid").show();
+			return false;
+		} 
+		else {
+			$("#Error_allcontractsid").hide();
+		}
+
+		$("#scgform4").show();
+		$("#scgform3").hide();
+		return false;
+	});
+	$("#form3previd").click(function () {
+		$("#scgform2").show();
+		$("#scgform3").hide();
+		return false;
+	});
+	$("#form4nextid").click(function () {
+
+		//console.log('form4nextid');
+
+		if ($('#evaluationtotalid').val() == "") {
+			$("#Error_evaluationtotalid").show();
+			return false;
+		} else {
+			$("#Error_evaluationtotalid").hide();
+		}
+		if ($('#TotalNumberofEmpid').val() == "") {
+			$("#Error_TotalNumberofEmpid").show();
+			return false;
+		} else {
+			$("#Error_TotalNumberofEmpid").hide();
+		}
+		if ($('#excellentyid').val() == "") {
+			$("#Error_excellentyid").show();
+			return false;
+		} else {
+			$("#Error_excellentyid").hide();
+		}
+		if ($('#verygoodyid').val() == "") {
+			$("#Error_verygoodyid").show();
+			return false;
+		} else {
+			$("#Error_verygoodyid").hide();
+		}
+		if ($('#goodyid').val() == "") {
+			$("#Error_goodyid").show();
+			return false;
+		} else {
+			$("#Error_goodyid").hide();
+		}
+		if ($('#acceptableyid').val() == "") {
+			$("#Error_acceptableyid").show();
+			return false;
+		} else {
+			$("#Error_acceptableyid").hide();
+		}
+		if ($('#weakyid').val() == "") {
+			$("#Error_weakyid").show();
+			return false;
+		} else {
+			$("#Error_weakyid").hide();
+		}
+
+		$("#scgform5").show();
+		$("#scgform4").hide();
+
+		return false;
+	});
+
+	$("#form4previd").click(function () {
+		$("#scgform3").show();
+		$("#scgform4").hide();
+		return false;
+	});
+
+	$("#form5nextid").click(function () {
+
+		if(parseInt(uploadArrayEmployeedetailsid.length) <= 0){
+
+			$("#Error_Employeedetailsid").show();
+			return false;
+
+		} 
+		else {
+
+			$("#Error_Employeedetailsid").hide();
+
+		}
+
+		entitylogofiles1 = document.getElementById('Entitylogofileid');
+		gradensaleriesfilenames = document.getElementById('Gradensalaryid');
+		budegetfilenames = document.getElementById('budgetdocid');
+		balancefilenames = document.getElementById('balancescorecardid');
+		financialfilenames = document.getElementById('financialstatementid');
+		taxfilenames = document.getElementById('taxsummaryid');
+		evaluationfilenames = document.getElementById('resultsofevaluationid');
+		allcontractsfilenames = document.getElementById('allcontractsid');
+
+		var name1 = "";
+
+		for (var i = 0; i < entitylogofiles1.files.length; ++i) {
+
+			if(removedArrayEntityLogo.indexOf(entitylogofiles1.files.item(i).name) == -1){
+
+				name1 += entitylogofiles1.files.item(i).name + ";";
+				
+			}
+			
+			//alert("file name: " + name);
+
+		}
+		$("#entityfilesidreadonly").append(name1);
+
+		var name2 = "";
+		for (var i = 0; i < gradensaleriesfilenames.files.length; ++i) {
+
+			if(removedArrayGradensalaryid.indexOf(gradensaleriesfilenames.files.item(i).name) == -1){
+
+				name2 += gradensaleriesfilenames.files.item(i).name + ";";
+				
+			}
+			
+			//alert("file name: " + name);
+
+		}
+		$("#gradeandsalaryfilesreadonly").append(name2);
+		
+		var name3 = "";
+		for (var i = 0; i < budegetfilenames.files.length; ++i) {
+
+			if(removedArraybudgetdocid.indexOf(budegetfilenames.files.item(i).name) == -1){
+
+				name3 += budegetfilenames.files.item(i).name + ";";
+				
+			}
+			
+			//alert("file name: " + name);
+
+		}
+		$("#budgetfilesreadonly").append(name3);
+
+		var name4 = "";
+		for (var i = 0; i < balancefilenames.files.length; ++i) {
+
+			if(removedArraybalancescorecardid.indexOf(balancefilenames.files.item(i).name) == -1){
+
+				name4 += balancefilenames.files.item(i).name + ";";
+				
+			}
+			
+			//alert("file name: " + name);
+
+		}
+		$("#balancefilesreadonly").append(name4);
+		var name5 = "";
+		for (var i = 0; i < financialfilenames.files.length; ++i) {
+
+			if(removedArrayfinancialstatementid.indexOf(financialfilenames.files.item(i).name) == -1){
+
+				name5 += financialfilenames.files.item(i).name + ";";
+				
+			}
+			
+			//alert("file name: " + name);
+
+		}
+		$("#financialfilesreadonly").append(name5);
+		var name6 = "";
+		for (var i = 0; i < taxfilenames.files.length; ++i) {
+
+			if(removedArraytaxsummaryid.indexOf(taxfilenames.files.item(i).name) == -1){
+
+				name6 += taxfilenames.files.item(i).name + ";";
+				
+			}
+			
+			//alert("file name: " + name);
+
+		}
+		$("#taxsummaryfilesreadonly").append(name6);
+		var name7 = "";
+		for (var i = 0; i < evaluationfilenames.files.length; ++i) {
+
+			if(removedArrayresultsofevaluationid.indexOf(evaluationfilenames.files.item(i).name) == -1){
+
+				name7 += evaluationfilenames.files.item(i).name + ";";
+				
+			}
+
+			//alert("file name: " + name);
+		}
+		$("#evaluationfilesreadonly").append(name7);
+
+		var name8 = "";
+		for (var i = 0; i < allcontractsfilenames.files.length; ++i) {
+
+			if(removedArrayallcontractsid.indexOf(allcontractsfilenames.files.item(i).name) == -1){
+
+				name8 += allcontractsfilenames.files.item(i).name + ";";
+				
+			}
+
+			//alert("file name: " + name);
+		}
+		$("#allcontractfilesreadonly").append(name8);
+		$("#scgform5").hide();
+		$("#scgform6").show();
+		if (RequestStatus == "") {
+			$("#gmtrid").hide();
+			$("#pnrtrid").hide();
+			$("#cnbtrid").hide();
+			$("#cnbtrid2").hide();
+			$("#pnrtrid2").hide();
+			$("#aatrid").hide();
+			$("#confirmid").show();
+			$("#GMReview").hide();
+			$("#PNRAPPROVEID").hide();
+			$("#PNRrejectid").hide();
+			$("#CNBAPPROVEID").hide();
+			$("#CNGrejectid").hide();
+			$("#PNRReview").hide();
+			$("#aatReview").hide();
+		}
+		return false;
+	});
+
+	$("#reasontopayid").click(function () {
+		if (document.getElementById('reasontopayid').value === '') {
+			document.getElementById('reasontopayid').value += '● ';
+		}
+	});
+	$("#reasontopayid").keyup(function (event) {
+		var keycode = (event.keyCode ? event.keyCode : event.which);
+		if (keycode == '13') {
+			//$("#reasontopayid").append(".");
+			//$("#reasontopayid").append("\n");
+			//$("#reasontopayid").append(".");
+			// var txt = 
+			var box = $("#reasontopayid");
+			// box.val(box.val() + "\n");
+			box.val(box.val() + "● ");
+		}
+
+	});
+	$("#achivementsid").click(function () {
+		if (document.getElementById('achivementsid').value === '') {
+			document.getElementById('achivementsid').value += '● ';
+		}
+	});
+	$("#achivementsid").keyup(function (event) {
+		var keycode = (event.keyCode ? event.keyCode : event.which);
+		if (keycode == '13') {
+			//$("#reasontopayid").append(".");
+			//$("#reasontopayid").append("\n");
+			//$("#reasontopayid").append(".");
+			// var txt = 
+			var box = $("#achivementsid");
+			// box.val(box.val() + "\n");
+			box.val(box.val() + "●");
+		}
+
+	});
+
+
+	$("#form5previd").click(function () {
+		$("#scgform4").show();
+		$("#scgform5").hide();
+		return false;
+	});
+	// Save form data first time the form is submitted.
+	$("#confirmid").click(function () {
+		$("#errorid").val("");
+		validationflag = 0
+		validation();
+		if (validationflag == 0 && oldornew == 0) {
+			RequestStatus = "RequestSaved";
+			savedata();
+			// window.location.replace("http://hraes-uat/sites/eservices/Pages/homepage.aspx");
+		}
+		else if (oldornew == 1 && validationflag == 0) {
+
+			updatedata(reqid);
+			// window.location.replace("http://hraes-uat/sites/eservices/Pages/homepage.aspx");
+		}
+		else {
+			$("#errorid").append(errorval);
+			validationflag = 0;
+			//savedata();
+		}
+		return false;
+	});
+	$("#form6previd").click(function () {
+		$("#scgform5").show();
+		$("#scgform6").hide();
+		return false;
+	});
+	$("#GMReview").click(function (e) {
+		RequestStatus = "RequestReviwedbyGMOffice";
+		Outcome = "Reviewed";
+		UpdateTask(Outcome);
+		e.preventDefault();
+		//updatedata(reqid);
+		// window.location.replace("http://hraes-uat/sites/eservices/Pages/homepage.aspx");
+	});
+	$("#PNRAPPROVEID").click(function (e) {
+		RequestStatus = "RequestReviwedbyPNR";
+		Outcome = "Approved";
+		UpdateTask(Outcome);
+		e.preventDefault();
+		//updatedata(reqid);
+		//window.location.replace("http://hraes-uat/sites/eservices/Pages/homepage.aspx");
+	});
+	$("#PNRrejectid").click(function (e) {
+		$("#errorid").val("");
+		if (!$.trim($("#pnrnotesid").val())) {
+			errorval += "Add Notes<br> ";
+			validationflag = 1;
+			$("#errorid").append(errorval);
+		}
+		else {
+			RequestStatus = "RequestReviwedbyPNR";
+			Outcome = "Rejected";
+			UpdateTask(Outcome);
+			//updatedata(reqid);
+			//window.location.replace("http://hraes-uat/sites/eservices/Pages/homepage.aspx");
+		}
+		e.preventDefault();
+	});
+	$("#CNBAPPROVEID").click(function (e) {
+
+		$("#errorid").val("");
+
+		if(parseInt(uploadArraystydyfileid.length) <= 0){
+
+			errorval += "Add study files<br> ";
+			validationflag = 1;
+			$("#errorid").append(errorval);
+
+		}
+		else {
+
+			RequestStatus = "RequestReviwedbyCNB";
+			Outcome = "Approved";
+			//updatedata(reqid);
+			//	SP.SOD.executeFunc('sp.js', 'SP.ClientContext', createFile);
+			UpdateTask(Outcome);
+			//	window.location.replace("http://hraes-uat/sites/eservices/Pages/homepage.aspx");
+
+		}
+		e.preventDefault();
+
+	});
+
+	$("#CNGrejectid").click(function (e) {
+		$("#errorid").val("");
+		if (!$.trim($("#cnbnotesid").val())) {
+			errorval += "Add Notes<br> ";
+			validationflag = 1;
+			$("#errorid").append(errorval);
+		}
+		else {
+			RequestStatus = "RequestReviwedbyCNB";
+			Outcome = "Rejected";
+			//updatedata(reqid);
+			UpdateTask(Outcome);
+			// window.location.replace("http://hraes-uat/sites/eservices/Pages/homepage.aspx");
+		}
+		e.preventDefault();
+	});
+	$("#PNRReview").click(function (e) {
+		RequestStatus = "RequestReviwedbyPNR2";
+		Outcome = "Reviewed";
+		//updatedata(reqid);
+		UpdateTask(Outcome);
+		//window.location.replace("http://hraes-uat/sites/eservices/Pages/homepage.aspx");
+		e.preventDefault();
+	});
+	$("#aatReview").click(function (e) {
+		RequestStatus = "RequestReviwedbyAAT";
+		Outcome = "Reviewed";
+		UpdateTask(Outcome);
+		e.preventDefault();
+		//updatedata(reqid);
+		//  window.location.replace("http://hraes-uat/sites/eservices/Pages/homepage.aspx");
+	});
+	var userLang = navigator.language || navigator.userLanguage;
+	var dict = {
+		"Equation to evaluate the performance with details": {
+			pt: "شرح المعادلة المستخدمة لتقييم الأداء",
+			en: "Equation to evaluate the performance with details"
+		},
+		"Reviewed": {
+			pt: "تمت المراجعة",
+			en: "Reviewed"
+		},
+		"Add Notes": {
+			pt: "إضافة ملاحظات",
+			en: "Add Notes"
+		},
+		"Notes": {
+			pt: "ملاحظات",
+			en: "Notes"
+		},
+		"Add Study": {
+			pt: "اضافة الدراسة",
+			en: "Add Study"
+		},
+		"Study": {
+			pt: "الدراسة",
+			en: "Study"
+		},
+		"Log in": {
+			pt: "تسجيل الدخول",
+			en: "Log in"
+		},
+		"Support": {
+			pt: "الدعم",
+			en: "Support"
+		},
+		"e Services": {
+			pt: "الخدمات الالكترونية",
+			en: "e Services"
+		},
+		"About HRA": {
+			pt: "حول هيئة الموارد البشرية",
+			en: "About HRA"
+		},
+		"Home": {
+			pt: "الرئيسية",
+			en: "Home"
+		},
+		"Copyright @ 2019 Human Resources Authority": {
+			pt: "جميع الحقوق محفوظة لهيئة الموارد البشرية @ 2019",
+			en: "Copyright @ 2019 Human Resources Authority"
+		},
+		"Site Map": {
+			pt: "خريطة الموقع",
+			en: "Site Map"
+		},
+		"Links": {
+			pt: "روابط",
+			en: "Links"
+		},
+		"HRA Employees": {
+			pt: "موظفو هيئة الموارد البشرية ",
+			en: "HRA Employees"
+		},
+		"Questions and Answers": {
+			pt: "أسئلة وأجوبة",
+			en: "Questions and Answers"
+		},
+		"Arabic": {
+			pt: "عربي",
+			en: "Arabic"
+		},
+
+		"BonusRequestService": {
+			pt: "خدمة طلب مكافأة",
+			en: "Bonus Request Service"
+		},
+		"Entity Logo": {
+			pt: "شعار الجهة",
+			en: "Entity Logo"
+		},
+		"Entity Name": {
+			pt: "اسم الجهة",
+			en: "Entity Name"
+		},
+		"Coordinator Name": {
+			pt: "اسم المنسق",
+			en: "Coordinator Name"
+		},
+		"Job Name": {
+			pt: "المسمى الوظيفي",
+			en: "Job Name"
+		},
+		"Contact Number": {
+			pt: "رقم التواصل",
+			en: "Contact Number"
+		},
+		"Email": {
+			pt: "البريد الالكتروني",
+			en: "Email"
+		},
+		"Approved Grades and Salaries": {
+			pt: "سلم الدرجات والرواتب المعتمد",
+			en: "Approved Grades and Salaries"
+		},
+		"IsBudgetAvailable": {
+			pt: "هل يوجد لديكم ميزانية كافية لصرف مكافآت للموظفين؟؟, الرجاء ايفاؤنا بقيمة الميزانية في ملف رسمي مرفق",
+			en: "Do you have a budget for employee bonuses? Please indicate the value of the budget indicated in an official document:"
+		},
+		"Yes": {
+			pt: "نعم",
+			en: "Yes"
+		},
+		"No": {
+			pt: "لا",
+			en: "No"
+		},
+		"Reasons to pay Bonuses": {
+			pt: "المبررات الداعمة لصرف المكافآت",
+			en: "Reasons to pay Bonuses"
+		},
+		"Entity Achivements for Year": {
+			pt: "انجازات الجهة للعام",
+			en: "Entity Achivements for Years"
+		},
+		"Enter the Year": {
+			pt: "أدخل السنة",
+			en: "Enter the Year"
+		},
+		"Balanced Score Card": {
+			pt: "نتائج الأداء المؤسسي للجهة",
+			en: "Balanced Score Card"
+		},
+		"Financial Statement": {
+			pt: "البيانات المالية",
+			en: "Financial Statement"
+		},
+		"Tax Summary": {
+			pt: "ملخص الضريبة",
+			en: "Tax Summary"
+		},
+		"Previous": {
+			pt: "السابق",
+			en: "Previous"
+		},
+		"Next": {
+			pt: "التالي",
+			en: "Next"
+		},
+		"Total Employees of Entity": {
+			pt: "إجمالي القوى العاملة في الجهة",
+			en: "Total Employees of Entity"
+		},
+		"Enter the number of locals with private contract": {
+			pt: "عدد الموظفين المواطنين ذوو العقود الخاصة",
+			en: "Enter the number of locals with private contract"
+		},
+		"Enter the number of locals with permanent contract": {
+			pt: "عدد الموظفين المواطنين ذوو العقود الدائمة",
+			en: "Enter the number of locals with permanent contract"
+		},
+		"Enter the number of non locals with private contract": {
+			pt: "عدد الموظفين غير المواطنين ذوو العقود الخاصة",
+			en: "Enter the number of non locals with private contract"
+		},
+		"Enter the number of non locals with permanent contract": {
+			pt: "عدد الموظفين غير المواطنين ذوو العقود الدائمة",
+			en: "Enter the number of non locals with permanent contract"
+		},
+		"* Please fill all the details!!!": {
+			pt: "الرجاء تعبئة جميع الحقول الضرورية",
+			en: "* Please fill all the details!!!"
+		},
+		"Enter the Total number of Employees": {
+			pt: "العدد الكلي لموظفي الجهة المطلوب صرف مكافآت لهم",
+			en: "Enter the Total number of Employees"
+		},
+		"Percentage of Emiratisation": {
+			pt: "نسبة التوطين المحققة لآخر عامين متتاليين",
+			en: "Percentage of Emiratisation"
+		},
+		// "Please enter last two consecutive years with their percentages like 2017-2018"
+		"TwoConsectiveYear": {
+			pt: "الرجاء إدخال العامين الماضيين المتتاليين مع نسبهما مثل 2017-2018",
+			en: "(for example Please enter last two consecutive years with their percentages like 2017-2018)"
+		},
+		"Result1": {
+			pt: "نتائج تقييم الأداء العام لجميع موظفي الجهة (بما في ذلك الموظفين المطلوب صرف مكافآت سنوية لهم)  يجب أن تكون معتمدة من رئيس الجهة",
+			en: "Results of evaluation for general performance for all entity employees (including the employees who request annual bonus for them)<br>Must be approved from President of Entity"
+		},
+		// For Private contracts employee which request annual bonus for them. Do their Contracts have fixed bonus? and if present please upload copy of all the contracts for all employees which request annual bonuses for them
+		"ForPrivateContractsEmp": {
+			pt: "من أجل موظفي العقود الخاصة المطلوب صرف مكافأة سنوية لهم. هل عقودهم الوظيفية تتضمن قيمة محددة كمكافأة أداء سنوية؟ وإذا كان موجودًا ، يرجى تحميل نسخة من جميع العقود لجميع الموظفين الذين يطلب مكافآت سنوية لهم",
+			en: "For Private contracts employee which request annual bonus for them. Do their Contracts have fixed bonus? and if present please upload copy of all the contracts for all employees which request annual bonuses for them"
+		},
+		"Explain the equation to evaluate the performance with details": {
+			pt: "الرجاء توضيح المعادلة المستخدمة في تقييم الأداء مع بيان النسب التالية",
+			en: "Explain the equation to evaluate the performance with details"
+		},
+		// "Percentage of Employee which they got Excellentgrade of total entity Employees"
+		"ExcellentGradePercentage": {
+			pt: "نسبة الموظفين الحاصلين على تقدير ممتاز من إجمالي موظفي الجهة",
+			en: "Percentage of Employee which they got Excellentgrade of total entity Employees"
+		},
+		"Total number of Employees": {
+			pt: "العدد الإجمالي للموظفين",
+			en: "Total number of Employees"
+		},
+		// "Percentage of Employee which they got Very Good grade of total entity Employees"
+		"VeryGoodGradePercentage": {
+			pt: "نسبة الموظفين الحاصلين على تقدير جيد جدا من إجمالي موظفي الجهة",
+			en: "Percentage of Employee which they got Very Good grade of total entity Employees"
+
+		},
+		"GoodGradePercentage": {
+			pt: "نسبة الموظفين الحاصلين على تقدير جيد  من إجمالي موظفي الجهة",
+			en: "Percentage of Employee which they got Good grade of total entity Employees"
+
+		},
+		// Percentage of Employee which they got Acceptable grade of total entity Employees
+		"AcceptableGradePercentage": {
+			pt: "نسبة الموظفين الحاصلين على درجة مقبول من إجمالي موظفي الجهة",
+			en: "Percentage of Employee which they got Acceptable grade of total entity Employees"
+
+		},
+		// Percentage of Employee which they got Weak grade of total entity Employees
+		"WeakGradePercentage": {
+			pt: "نسبة الموظفين الحاصلين على تقدير ضعيف من إجمالي موظفي الجهة",
+			en: "Percentage of Employee which they got Weak grade of total entity Employees"
+
+		},
+		// Please download and fill the excel and reupload it
+		"DownloadTemplate": {
+			pt: "الرجاء تحميل نموذج كشف الموظفين وتعبئته بدقة ثم اعادة تحميله ثانية",
+			en: "Please download and fill the excel and reupload it"
+
+		},
+		"Confirm": {
+			pt: "تأكيد الطلب",
+			en: "Confirm"
+
+		},
+		"Total number of locals with private contract": {
+			pt: "إجمالي عدد السكان المحليين بعقد خاص",
+			en: "Total number of locals with private contract"
+
+		},
+		"Total number of locals with permanent contract": {
+			pt: "إجمالي عدد السكان المحليين بعقد دائم",
+			en: "Total number of locals with permanent contract"
+
+		},
+		"Total number of non locals with private contract": {
+			pt: "العدد الإجمالي لغير المواطنين الذين لديهم عقد خاص",
+			en: "Total number of non locals with private contract"
+
+		},
+		"Total number of non locals with permanent contract": {
+			pt: "العدد الإجمالي لغير المواطنين الذين لديهم عقد دائم",
+			en: "Total number of non locals with permanent contract"
+
+		},
+		"Percentage of Emiratisation year 1": {
+			pt: "نسبة التوطين سنة 1",
+			en: "Percentage of Emiratisation year 1"
+
+		},
+		"Percentage of Emiratisation year 2": {
+			pt: "نسبة التوطين العام 2",
+			en: "Percentage of Emiratisation year 1"
+
+		},
+		"NoEmpExcellentGrade": {
+			pt: "الموظفين الحاصلين على تقدير ممتاز",
+			en: "No of Employees with Excellent grade"
+
+		},
+		"NoEmpVeryGoodGrade": {
+			pt: "الموظفين الحاصلين على تقدير جيد جدا",
+			en: "No of Employees with Very Good grade"
+
+		},
+		"NoEmpGoodGrade": {
+			pt: "الموظفين الحاصلين على تقدير جيد ",
+			en: "No of Employees with Good grade"
+
+		},
+		"NoEmpAcceptableGrade": {
+			pt: "الموظفين الحاصلين على درجة مقبول ",
+			en: "No of Employees with Acceptable grade"
+
+		},
+		"GMReview": {
+			pt: "مراجعة مكتب المدير العام",
+			en: "GM Review"
+
+		},
+
+		"NoEmpWeakGrade": {
+			pt: "الموظفين الحاصلين على تقدير ضعيف",
+			en: "No of Employees with Weak grade"
+
+		},
+		"PoliciesAndResearchComments": {
+			pt: "الموظفين الحاصلين على تقدير ضعيف",
+			en: "Policies and Research Department Comments"
+
+		},
+		//CompensationAndBenefittsComments
+		"CompensationAndBenefittsComments": {
+			pt: "الموظفين الحاصلين على تقدير ضعيف",
+			en: "Compensation and Benefits Department Comments"
+
+		},
+		"AADeptComments": {
+			pt: "الموظفين الحاصلين على تقدير ضعيف",
+			en: "Authority and Affairs Department Comments"
+
+		},
+		//GMReview
+		// "GMReview": {
+		// 	pt: "مراجعة مكتب المدير العام",
+		// 	en: "GM Review2"
+
+		// },
+		"Please enter Entity Name": {
+			pt: "أدخل اسم الجهة",
+			en: "Please enter Entity Name"
+		},
+		"Please enter Coordinator Name": {
+			pt: "أدخل اسم المنسق",
+			en: "Please enter Coordinator Name"
+		},
+		"Please enter Job Name": {
+			pt: " أدخل المسمى الوظيفي",
+			en: "Please enter Job Name"
+		},
+		"Please enter Contact Number": {
+			pt: "أدخل رقم التواصل",
+			en: "Please enter Contact Number"
+		},
+		"Please enter Email": {
+			pt: "أدخل عنوان البريد الالكتروني",
+			en: "Please enter Email"
+		},
+		"Please enter valid Contact Number": {
+			pt: "الرجاء إدخال رقم اتصال صحيح",
+			en: "Please enter valid Contact Number"
+		},
+		"Please enter your budget": {
+			pt: "الرجاء ادخال الميزانية",
+			en: "Please enter your budget"
+		},
+		"Please enter Reasons to pay Bonuses": {
+			pt: "الرجاء ادخال أسباب صرف المكافآت",
+			en: "Please enter Reasons to pay Bonuses"
+		},
+		"Please enter achievements for year": {
+			pt: "الرجاء ادخال انجازات الجهة للعام",
+			en: "Please enter achievements for year"
+		},
+		"Please enter the year": {
+			pt: "الرجاء ادخال السنة",
+			en: "Please enter the year"
+		},
+		"Please enter valid achievement year": {
+			pt: "الرجاء ادخال السنة بشكل صحيح",
+			en: "Please enter valid achievement year"
+		},
+		"Please enter Total Employees of Entity": {
+			pt: "الرجاء ادخال العدد الكلي للعاملين في الجهة",
+			en: "Please enter Total Employees of Entity"
+		},
+		"Please enter number of locals with private contract": {
+			pt: "الرجاء ادخال عدد الموظفين المواطنين ذوو العقود الخاصة",
+			en: "Please enter number of locals with private contract"
+		},
+		"Please enter number of locals with permanent contract": {
+			pt: "الرجاء ادخال عدد الموظفين المواطنين ذوو العقود الدائمة",
+			en: "Please enter number of locals with permanent contract"
+		},
+		"Please enter number of non locals with private contract": {
+			pt: "الرجاء ادخال عدد الموظفين غير المواطنين ذوو العقود الخاصة",
+			en: "Please enter number of non locals with private contract"
+		},
+		"Please enter number of non locals with permanent contract": {
+			pt: "الرجاء ادخال عدد الموظفين غير المواطنين ذوو العقود الدائمة",
+			en: "Please enter number of non locals with permanent contract"
+		},
+		"Please enter the ratio": {
+			pt: "الرجاء ادخال النسبة",
+			en: "Please enter the ratio"
+		},
+		"Please enter valid year": {
+			pt: "أدخل السنة بشكل صحيح",
+			en: "Please enter valid year"
+		},
+		"Please enter Explain the equation to evaluate the performance with details": {
+			pt: "الرجاء شرح المعادلة المستخدمة في تقييم الأداء العام بالتفصيل",
+			en: "Please enter Explain the equation to evaluate the performance with details"
+		},
+		"Please enter Total number of Employees": {
+			pt: "الرجاء ادخال العدد الكلي لموظفي الجهة",
+			en: "Please enter Total number of Employees"
+		},
+		"Please Enter No of Employees with Excellent grade": {
+			pt: "أدخل عدد الموظفين الحاصلين على تقييم ممتاز",
+			en: "Please Enter No of Employees with Excellent grade"
+		}, "Please Enter Percentage of Employee which they got Very Good grade of total entity Employees": {
+			pt: "عدد الموظفين الحاصلين على تقييم جيد جدا من مجموع موظفي الهيئة",
+			en: "Please Enter Percentage of Employee which they got Very Good grade of total entity Employees"
+		},
+		"Please Enter No of Employees with Good grade": {
+			pt: "الرجاء ادخال عدد الموظفين الحاصلين على تقييم جيد",
+			en: "Please Enter No of Employees with Good grade"
+		},
+		"Please Enter No of Employees with Acceptable grade": {
+			pt: "الرجاء ادخال عدد الموظفين الحاصلين على تقييم مقبول",
+			en: "Please Enter No of Employees with Acceptable grade"
+		},
+		"Please Enter No of Employees with Weak grade": {
+			pt: "الرجاء ادخال عدد الموظفين الحاصلين على تقييم ضعيف",
+			en: "Please Enter No of Employees with Weak grade"
+		},
+		"Please upload Entity Logo": {
+			pt: "الرجاء تحميل شعار الجهة كصورة",
+			en: "Please upload Entity Logo"
+		},
+		"Please upload Grades and Salaries": {
+			pt: "الرجاء تحميل سلم الرواتب والدرجات المعتمد كملف",
+			en: "Please upload Grades and Salaries"
+		},
+		"Please upload your budget": {
+			pt: "الرجاء تحميل ملف رسمي بالميزانية",
+			en: "Please upload your budget"
+		},
+		"Please upload Balanced Score Card": {
+			pt: "الرجاء تحميل نتائج الأداء المؤسسي كملف مرفق",
+			en: "Please upload Balanced Score Card"
+		},
+		"Please upload Financial Statement": {
+			pt: "الرجاء تحميل البيانات المالية كملف مرفق",
+			en: "Please upload Financial Statement"
+		},
+		"Please upload Tax Summary": {
+			pt: "الرجاء تحميل ملخص الضريبة كملف مرفق",
+			en: "Please upload Tax Summary"
+		},
+		"Please upload results of evaluation": {
+			pt: "الرجاء تحميل نتائج تقييم الأداء العام",
+			en: "Please upload results of evaluation"
+		},
+		"Please upload all contracts": {
+			pt: "الرجاء تحميل جميع العقود كملفات مرفقة",
+			en: "Please upload all contracts"
+		},
+		"Please upload Employee details": {
+			pt: "الرجاء اكمال تفاصيل الموظف",
+			en: "Please upload Employee details"
+		},
+		"Please upload study file": {
+			pt: "الرجاء تحميل ملف الدراسة",
+			en: "Please upload stydy file"
+		},
+		"Percentage value can not be grater than 100": {
+			pt: "الرجاء ادخال نسبةالمئوية أقل من 100",
+			en: "Percentage value can not be grater than 100"
+		},
+		"Employees should be greater than 0": {
+			pt: "الرجاء ادخال عدد العاملين أكبر من 0",
+			en: "Employees should be greater than 0"
+		}
+
+	}
+
+
+	var translator = $('body').translate({ lang: "en", t: dict });
+	//if(userLang.indexOf('ar')!= -1){
+	if (userLang.indexOf('en') != -1) {
+		translator.lang("pt");
+	}
+	//else if(userLang.indexOf('en')!= -1){
+	//translator.lang("en");
+	//}
+	$("#Englishbtnid").click(function () {
+		translator.lang("en");
+		languageis = "en";
+		$("#arabicbtnid").show();
+		$("#Englishbtnid").hide();
+		$(".formdivcls tr").each(function (elem, index) {
+			var arr = $.makeArray($("td", this).detach());
+			arr.reverse();
+			$(this).append(arr);
+		});
+		$(".labelcls").css({ "border-left": "4px solid #6999ad", "padding-left": "10px", "border-right": "none", "padding-right": "0px" });
+		$(".radiocls").css({ "float": "left" });
+		$(".formdivcls table td").css({ "text-align": "left" });
+		$("input").css({ "text-align": "left", "float": "left" });
+		$("p").css({ "text-align": "left" });
+		$("a").css({ "text-align": "left" });
+		$("textarea").css({ "text-align": "left" });
+		$(".tablefloat").css({ "float": "left" });
+		$(".bigtableclsdiv table").css({ "float": "left" });
+		$("#budgetid").attr("placeholder", "Please Enter Budget");
+		$("#entityattachmentsforyearid").attr("placeholder", "Enter the year");
+		$("#achivementsid").attr("placeholder", "Enter the achivements");
+		$("#noofempgettingbonussesid").attr("placeholder", "Enter the total Employees number");
+		$("#noofemplocpricontractid").attr("placeholder", "Enter the number of locals with private contract");
+		$("#noofemplocpercontractid").attr("placeholder", "Enter the number of locals with permanent contrac");
+		$("#noofempnonlocpricontractid").attr("placeholder", "Enter the number of non locals with private contract");
+		$("#noofempnonlocpercontractid").attr("placeholder", "Enter the number of non locals with permanent contract");
+		$("#year1percentageid").attr("placeholder", "Enter the percentage");
+		$("#year2percentageid").attr("placeholder", "Enter the percentage");
+		$("#year1id").attr("placeholder", "Enter the year");
+		$("#year2id").attr("placeholder", "Enter the year");//achivementsid
+		$("#evaluationtotalid").attr("placeholder", "Enter the evaluate equation here");
+		$("#TotalNumberofEmpid").attr("placeholder", "Enter the total number of employees");
+		$("#excellentyid").attr("placeholder", "Enter Excellent Employees")
+		$("#verygoodyid").attr("placeholder", "Enter Very good Employees")
+		$("#goodyid").attr("placeholder", "Enter Good Employees")
+		$("#acceptableyid").attr("placeholder", "Enter acceptable Employees")
+		$("#weakyid").attr("placeholder", "Enter Weak Employees")
+
+		$('#reasontopayid').css('direction', 'ltr');
+		$('#achivementsid').css('direction', 'ltr');
+		$('#evaluationtotalid').css('direction', 'ltr');
+		$('#reasontopayidreadonly').css('direction', 'ltr');
+		$('#achivementsidreadonly').css('direction', 'ltr');
+		$('#evaluationtotalidreadonly').css('direction', 'ltr');
+		$('#gmnotesid').css('direction', 'ltr');
+		$('#pnrnotesid').css('direction', 'ltr');
+		$('#cnbnotesid').css('direction', 'ltr');
+		$('#pnrnotesid2').css('direction', 'ltr');
+		$('#aatnotesid').css('direction', 'ltr');
+
+		return false;
+	});
+	$("#arabicbtnid").click(function () {
+		translator.lang("pt");
+		$("#arabicbtnid").hide();
+		$("#Englishbtnid").show();
+		languageis = "ar";
+		$(".formdivcls tr").each(function (elem, index) {
+			var arr = $.makeArray($("td", this).detach());
+			arr.reverse();
+			$(this).append(arr);
+		});
+		$(".labelcls").css({ "border-right": "4px solid #6999ad", "padding-right": "10px", "border-left": "none", "padding-left": "0px" });
+		$(".radiocls").css({ "float": "right" });
+		$(".formdivcls table td").css({ "text-align": "right" });
+		$("input").css({ "text-align": "right", "float": "right" });
+		$("p").css({ "text-align": "right" });
+		$("a").css({ "text-align": "right" });
+		$("textarea").css({ "text-align": "-webkit-right" });
+		$(".tablefloat").css({ "float": "right" });
+		$(".bigtableclsdiv table").css({ "float": "right" });
+		$("#budgetid").attr("placeholder", "الرجاء ادخال الميزانية");
+		$("#entityattachmentsforyearid").attr("placeholder", "أدخل السنة");
+		$("#achivementsid").attr("placeholder", "انجازات الجهة للعام");
+		$("#noofempgettingbonussesid").attr("placeholder", "العدد الكلي لموظفي الجهة المطلوب صرف مكافآت لهم");
+		$("#noofemplocpricontractid").attr("placeholder", "عدد الموظفين المواطنين ذوو العقود الخاصة");
+		$("#noofemplocpercontractid").attr("placeholder", "عدد الموظفين المواطنين ذوو العقود الدائمة");
+		$("#noofempnonlocpricontractid").attr("placeholder", "عدد الموظفين غير المواطنين ذوو العقود الخاصة");
+		$("#noofempnonlocpercontractid").attr("placeholder", "عدد الموظفين غير المواطنين ذوو العقود الدائمة");
+		$("#year1percentageid").attr("placeholder", "أدخل النسبة");
+		$("#year2percentageid").attr("placeholder", "أدخل النسبة");
+		$("#year1id").attr("placeholder", "ادخل السنة");
+		$("#year2id").attr("placeholder", "أدخل النسبة");
+		$("#evaluationtotalid").attr("placeholder", "أدخل المعادلةالمستخدمة");
+		$("#TotalNumberofEmpid").attr("placeholder", "أدخل العدد الكلي لموظفي الجهة");
+		$("#excellentyid").attr("placeholder", "أدخل عدد الموظفين الحاصلين على تقدير ممتاز من إجمالي موظفي الجهة")
+		$("#verygoodyid").attr("placeholder", "أدخل عدد الموظفين الحاصلين على تقديرجيد جدا من إجمالي موظفي الجهة")
+		$("#goodyid").attr("placeholder", "أدخل عدد الموظفين الحاصلين على درجة جيد")
+		$("#acceptableyid").attr("placeholder", "أدخل عدد الموظفين الحاصلين على درجة مقبول")
+		$("#weakyid").attr("placeholder", "أدخل عدد الموظفين الحاصلين على تقدير ضعيف");
+
+		$('#reasontopayid').css('direction', 'rtl');
+		$('#achivementsid').css('direction', 'rtl');
+		$('#evaluationtotalid').css('direction', 'rtl');
+		$('#reasontopayidreadonly').css('direction', 'rtl');
+		$('#achivementsidreadonly').css('direction', 'rtl');
+		$('#evaluationtotalidreadonly').css('direction', 'rtl');
+		$('#gmnotesid').css('direction', 'rtl');
+		$('#pnrnotesid').css('direction', 'rtl');
+		$('#cnbnotesid').css('direction', 'rtl');
+		$('#pnrnotesid2').css('direction', 'rtl');
+		$('#aatnotesid').css('direction', 'rtl');
+
+		return false;
+	});
+
+
+});
+
+
+
+function UpdateTask(taskOutCome) {
+
+
+	// taskOutCome may be approve or reject.
+	// var siteUrl = _spPageContextInfo.webAbsoluteUrl;
+
+	// //   http://[...]/_api/web/lists/getbytitle('Employees')/Items/?$select=Title,Employer/Id&$expand=Employer/Id&$filter=Employer/Id eq 1
+	// //var fullUrl2 = siteUrl + "/_api/web/lists/GetByTitle('BonusReqTaskList')/items?$select=Title";
+
+	var requestUri = _spPageContextInfo.webAbsoluteUrl + "/_api/Web/Lists/getByTitle('BonusReqTaskList')/items(" + taskid + ")";
+	var requestHeaders = {
+		'Accept': 'application/json;odata=verbose',
+		'X-RequestDigest': $('#__REQUESTDIGEST').val(),
+		'X-HTTP-Method': 'MERGE',
+		'If-Match': '*'
+	};
+
+	var taskData = {
+		"__metadata": { "type": "SP.Data.BonusReqTaskListListItem" },
+		"TaskOutcome": taskOutCome,
+		"Status": "Completed",
+		"PercentComplete": 100
+	};
+	requestBody = JSON.stringify(taskData);
+	$.ajax({
+		url: requestUri, type: 'POST',
+		contentType: 'application/json;odata=verbose',
+		headers: requestHeaders,
+		data: JSON.stringify(taskData)
+		,
+		success: function (response) {
+
+			alert('The task is successfully completed and  now updating the bonous request data.');
+			updatedata(reqid);
+
+		},
+		error: function (error) {
+			alert("The task could not completed");
+		}
+	});
+}
+
+function getreqid(id) {
+	var queryUrl = "http://hraes-uat/sites/eservices/_api/lists/GetByTitle('BonusRequestList')/items?$filter=ID eq '" + id + "'";
+	var data;
+	$.ajax
+		({
+			url: queryUrl,
+			type: "GET",
+			data: data,
+			headers:
+			{
+				"Accept": "application/json;odata=verbose",
+				"Content-Type": "application/json;odata=verbose",
+				"X-RequestDigest": $("#__REQUESTDIGEST").val(),
+				"IF-MATCH": "*",
+				"X-HTTP-Method": null
+			},
+			cache: false,
+			success: function (data) {
+				//	reqid = data.d.results[0].BonusReqestID;
+				reqid = data.d.results[0].ID;
+				getdata(reqid);
+			}
+		});
+
+}
+function getdata(reqid) {
+	var queryUrl = "http://hraes-uat/sites/eservices/_api/lists/GetByTitle('BonusRequestList')/items?$filter=ID eq '" + reqid + "'";
+	var data;
+
+	$.ajax
+		({
+			url: queryUrl,
+			type: "GET",
+			data: data,
+			headers:
+			{
+				"Accept": "application/json;odata=verbose",
+				"Content-Type": "application/json;odata=verbose",
+				"X-RequestDigest": $("#__REQUESTDIGEST").val(),
+				"IF-MATCH": "*",
+				"X-HTTP-Method": null
+			},
+			cache: false,
+			success: function (data) {
+
+				RequestStatus = data.d.results[0].RequestStatus;
+				if (RequestStatus == "") {
+					$("#scgform0").show();
+					$("#scgform1").hide();
+					$("#scgform2").hide();
+					$("#scgform3").hide();
+					$("#scgform4").hide();
+					$("#scgform5").hide();
+					$("#scgform6").show();
+					$("#gmtrid").hide();
+					$("#pnrtrid").hide();
+					$("#cnbtrid").hide();
+					$("#cnbtrid2").hide();
+					$("#pnrtrid2").hide();
+					$("#aatrid").hide();
+					$("#confirmid").show();
+					$("#GMReview").hide();
+					$("#PNRAPPROVEID").hide();
+					$("#PNRrejectid").hide();
+					$("#CNBAPPROVEID").hide();
+					$("#CNGrejectid").hide();
+					$("#PNRReview").hide();
+					$("#aatReview").hide();
+				}
+				if (RequestStatus == "Waiting for Review from GM Ofiice") {
+					$("#scgform0").hide();
+					$("#scgform1").hide();
+					$("#scgform2").hide();
+					$("#scgform3").hide();
+					$("#scgform4").hide();
+					$("#scgform5").hide();
+					$("#scgform6").show();
+					$("#gmtrid").show();
+					$("#pnrtrid").hide();
+					$("#cnbtrid").hide();
+					$("#cnbtrid2").hide();
+					$("#pnrtrid2").hide();
+					$("#aatrid").hide();
+					$("#confirmid").hide();
+					$("#GMReview").show();
+					$("#PNRAPPROVEID").hide();
+					$("#PNRrejectid").hide();
+					$("#CNBAPPROVEID").hide();
+					$("#CNGrejectid").hide();
+					$("#PNRReview").hide();
+					$("#aatReview").hide();
+				}
+
+				if (RequestStatus == "Waiting for Approval form Policies and Rearch Department") {
+					$("#scgform0").hide();
+					$("#scgform1").hide();
+					$("#scgform2").hide();
+					$("#scgform3").hide();
+					$("#scgform4").hide();
+					$("#scgform5").hide();
+					$("#scgform6").show();
+					$("#gmtrid").show();
+					$("#gmnotesid").attr("disabled", true);
+					$("#pnrtrid").show();
+					$("#cnbtrid").hide();
+					$("#cnbtrid2").hide();
+					$("#pnrtrid2").hide();
+					$("#aatrid").hide();
+					$("#confirmid").hide();
+					$("#GMReview").hide();
+					if (languageis == "en") {
+						$("#gmnotesidp").text("Notes");
+					}
+					if (languageis == "ar") {
+						$("#gmnotesidp").text("ملاحظات");
+					}
+					$("#PNRAPPROVEID").show();
+					$("#PNRrejectid").show();
+					$("#CNBAPPROVEID").hide();
+					$("#CNGrejectid").hide();
+					$("#PNRReview").hide();
+					$("#aatReview").hide();
+				}
+				if (RequestStatus == "Waiting for Approval from Compensation and Benefits Department") {
+					$("#scgform0").hide();
+					$("#scgform1").hide();
+					$("#scgform2").hide();
+					$("#scgform3").hide();
+					$("#scgform4").hide();
+					$("#scgform5").hide();
+					$("#scgform6").show();
+					$("#gmtrid").show();
+					$("#gmnotesid").attr("disabled", true);
+					$("#pnrtrid").show();
+					$("#pnrnotesid").attr("disabled", true);
+					$("#cnbtrid").show();
+					$("#cnbtrid2").show();
+					$("#pnrtrid2").hide();
+					$("#aatrid").hide();
+					$("#confirmid").hide();
+					$("#GMReview").hide();
+					$("#PNRAPPROVEID").hide();
+					$("#PNRrejectid").hide();
+					if (languageis == "en") {
+						$("#gmnotesidp").text("Notes");
+						$("#pnrnotesidp").text("Notes");
+					}
+					if (languageis == "ar") {
+						$("#gmnotesidp").text("ملاحظات");
+						$("#pnrnotesidp").text("ملاحظات");
+					}
+					$("#CNBAPPROVEID").show();
+					$("#CNGrejectid").show();
+					$("#PNRReview").hide();
+					$("#aatReview").hide();
+				}
+				if (RequestStatus == "Waiting for Review from Policies and Research Department") {
+					$("#scgform0").hide();
+					$("#scgform1").hide();
+					$("#scgform2").hide();
+					$("#scgform3").hide();
+					$("#scgform4").hide();
+					$("#scgform5").hide();
+					$("#scgform6").show();
+					$("#gmtrid").show();
+					$("#gmnotesid").attr("disabled", true);
+					$("#pnrtrid").show();
+					$("#pnrnotesid").attr("disabled", true);
+					$("#cnbtrid").show();
+					$("#cnbtrid2").show();
+					$("#cnbnotesid").attr("disabled", true);
+					$("#stydyfileid").hide();
+					$("#pnrtrid2").show();
+					$("#aatrid").hide();
+					$("#confirmid").hide();
+					$("#GMReview").hide();
+					$("#PNRAPPROVEID").hide();
+					$("#PNRrejectid").hide();
+					$("#CNBAPPROVEID").hide();
+					$("#CNGrejectid").hide();
+					if (languageis == "en") {
+						$("#gmnotesidp").text("Notes");
+						$("#pnrnotesidp").text("Notes");
+						$("#cnbnotesidp").text("Notes");
+					}
+					if (languageis == "ar") {
+						$("#gmnotesidp").text("ملاحظات");
+						$("#pnrnotesidp").text("ملاحظات");
+						$("#cnbnotesidp").text("ملاحظات");
+					}
+					$("#PNRReview").show();
+					$("#aatReview").hide();
+				}
+				if (RequestStatus == "Waiting for from Authority and Affair Unit") {
+					$("#scgform0").hide();
+					$("#scgform1").hide();
+					$("#scgform2").hide();
+					$("#scgform3").hide();
+					$("#scgform4").hide();
+					$("#scgform5").hide();
+					$("#scgform6").show();
+					$("#gmtrid").show();
+					$("#gmnotesid").attr("disabled", true);
+					$("#pnrtrid").show();
+					$("#pnrnotesid").attr("disabled", true);
+					$("#cnbtrid").show();
+					$("#cnbtrid2").show();
+					$("#cnbnotesid").attr("disabled", true);
+					$("#stydyfileid").hide();
+					$("#pnrtrid2").show();
+					$("#pnrnotesid2").attr("disabled", true);
+					$("#aatrid").show();
+					$("#confirmid").hide();
+					$("#GMReview").hide();
+					$("#PNRAPPROVEID").hide();
+					$("#PNRrejectid").hide();
+					$("#CNBAPPROVEID").hide();
+					$("#CNGrejectid").hide();
+					if (languageis == "en") {
+						$("#gmnotesidp").text("Notes");
+						$("#pnrnotesidp").text("Notes");
+						$("#cnbnotesidp").text("Notes");
+						$("#pnrnotesid2p").text("Notes");
+					}
+					if (languageis == "ar") {
+						$("#gmnotesidp").text("ملاحظات");
+						$("#pnrnotesidp").text("ملاحظات");
+						$("#cnbnotesidp").text("ملاحظات");
+						$("#pnrnotesid2p").text("Notes");
+					}
+					$("#PNRReview").hide();
+					$("#aatReview").show();
+
+				}
+				if (RequestStatus == "Revied by the AAUnit and the request completed.") {
+					$("#scgform0").hide();
+					$("#scgform1").hide();
+					$("#scgform2").hide();
+					$("#scgform3").hide();
+					$("#scgform4").hide();
+					$("#scgform5").hide();
+					$("#scgform6").show();
+					$("#gmtrid").show();
+					$("#gmnotesid").attr("disabled", true);
+					$("#pnrtrid").show();
+					$("#pnrnotesid").attr("disabled", true);
+					$("#cnbtrid").show();
+					$("#cnbtrid2").show();
+					$("#cnbnotesid").attr("disabled", true);
+					$("#stydyfileid").hide();
+					$("#pnrtrid2").show();
+					$("#pnrnotesid2").attr("disabled", true);
+					$("#aatrid").show();
+					$("#aatnotesid").attr("disabled", true);
+					$("#confirmid").hide();
+					$("#GMReview").hide();
+					$("#PNRAPPROVEID").hide();
+					$("#PNRrejectid").hide();
+					$("#CNBAPPROVEID").hide();
+					$("#CNGrejectid").hide();
+					$("#PNRReview").hide();
+					$("#aatReview").hide();
+					if (languageis == "en") {
+						$("#gmnotesidp").text("Notes");
+						$("#pnrnotesidp").text("Notes");
+						$("#cnbnotesidp").text("Notes");
+						$("#pnrnotesid2p").text("Notes");
+						$("#aatnotesidp").text("Notes");
+					}
+					if (languageis == "ar") {
+						$("#gmnotesidp").text("ملاحظات");
+						$("#pnrnotesidp").text("ملاحظات");
+						$("#cnbnotesidp").text("ملاحظات");
+						$("#pnrnotesid2p").text("ملاحظات");
+						$("#aatnotesidp").text("ملاحظات");
+					}
+				}
+				for (var i = 0; i < data.d.results.length; i++) {
+					idofitem = data.d.results[i].ID;
+					//alert(idofitem);
+
+					$("#Entitynameid").val(data.d.results[i].Company);
+
+					$("#Jobnameid").val(data.d.results[i].JobTitle);
+					$("#coordinatornameid").val(data.d.results[i].CoordinatorName);
+					$("#contactnumberid").val(data.d.results[i].WorkPhone);
+					$("#emailid").val(data.d.results[i].EMail);
+					//data.d.results[i].RequestorName);
+					//data.d.results[i].IssueDate
+					$("#budgetid").val(data.d.results[i].BudgetValue);
+					var x = data.d.results[i].ReasonsToGiveBonuses;
+					var y = $(x).text();
+					$("#reasontopayid").val(y);
+					$("#noofempgettingbonussesid").val(data.d.results[i].NoOfEmpGettingBonus);
+					if (data.d.results[i].budgetdocyesno == "yes") {
+						$("input[name='yesno'][value='yes']").prop('checked', true);
+					}
+					else {
+						$("input[name='yesno'][value='no']").prop('checked', true);
+					}
+					/*$("input[name='yesno']").val(data.d.results[i].budgetdocyesno);*//////check
+
+					$("#entityattachmentsforyearid").val(data.d.results[i].entityattachmentsforyear);
+					var a = data.d.results[i].achivements;
+					var b = $(a).text();
+					$("#achivementsid").val(b);
+					$("#noofemplocpricontractid").val(data.d.results[i].NumberOfLocals);
+					$("#noofempnonlocpricontractid").val(data.d.results[i].NumberOfNonLocals);
+					$("#noofemplocpercontractid").val(data.d.results[i].Nooflocalswithpermanent);
+					$("#noofempnonlocpercontractid").val(data.d.results[i].Noofnonlocalswithpermanent);
+					$("#year1id").val(data.d.results[i].Totalincomeyear1);
+					$("#year2id").val(data.d.results[i].Totalincomeyear2);
+					$("#year2percentageid").val(data.d.results[i].TotalIncome2ndYear);
+					$("#year1percentageid").val(data.d.results[i].TotalIncomeIstYear);
+					var m = data.d.results[i].evaluationtotal;
+					var n = $(m).text();
+					$("#evaluationtotalid").val(n);
+					$("#goodid").val(data.d.results[i].PercentageOfEmployeeGood);
+					$("#excellentid").val(data.d.results[i].PercentageOfEmployeesExcellence);
+					$("#acceptableid").val(data.d.results[i].PercentageOfExmployeeAcceptable);
+					$("#verygoodid").val(data.d.results[i].PercentageOfExmployeeVeryGood);
+					$("#weakid").val(data.d.results[i].PercentageOfExmployeeWeak);
+					$("#goodyid").val(data.d.results[i].PercentageOfEmployeeGoody);
+					$("#excellentyid").val(data.d.results[i].PercentageOfEmployeesExcellencey);
+					$("#acceptableyid").val(data.d.results[i].PercentageOfExmployeeAcceptabley);
+					$("#verygoodyid").val(data.d.results[i].PercentageOfExmployeeVeryGoody);
+					$("#weakyid").val(data.d.results[i].PercentageOfExmployeeWeaky);
+					//data.d.results[i].RequestID:RequestID,
+					//data.d.results[i].Requestidwithlink: {Url: RequestIDwithlink, Description: RequestID}
+					$("#Entitynamereadonlyid").val(data.d.results[i].Company);
+
+					$("#Jobnameidreadonly").val(data.d.results[i].JobTitle);
+					$("#coordinatornameidreadonly").val(data.d.results[i].CoordinatorName);
+					$("#contactnumberidreadonly").val(data.d.results[i].WorkPhone);
+					$("#emailidreadonly").val(data.d.results[i].EMail);
+					//data.d.results[i].RequestorName);
+					//data.d.results[i].IssueDate
+					$("#budgetidreadonly").val(data.d.results[i].BudgetValue);
+					var q = data.d.results[i].ReasonsToGiveBonuses;
+					var w = $(q).text();
+
+					$("#reasontopayidreadonly").val(w);
+
+					$("#noofempgettingbonussesidreadonly").val(data.d.results[i].NoOfEmpGettingBonus);
+
+					/*$("input[name='yesno']").val(data.d.results[i].budgetdocyesno);*//////check
+
+					$("#entityattachmentsforyearidreadonly").val(data.d.results[i].entityattachmentsforyear);
+					var e = data.d.results[i].achivements;
+					var r = $(e).text();
+					$("#achivementsidreadonly").val(r);
+
+					$("#noofemplocpricontractidreadonly").val(data.d.results[i].NumberOfLocals);
+					$("#noofempnonlocpricontractidreadonly").val(data.d.results[i].NumberOfNonLocals);
+					$("#noofemplocpercontractidreadonly").val(data.d.results[i].Nooflocalswithpermanent);
+					$("#noofempnonlocpercontractidreadonly").val(data.d.results[i].Noofnonlocalswithpermanent);
+					$("#year1idreadonly").val(data.d.results[i].Totalincomeyear1);
+					$("#year2idreadonly").val(data.d.results[i].Totalincomeyear2);
+					$("#year2percentageidreadonly").val(data.d.results[i].TotalIncome2ndYear);
+					$("#year1percentageidreadonly").val(data.d.results[i].TotalIncomeIstYear);
+					$("#evaluationtotalidreadonly").val(n);
+					$("#goodidreadonly").val(data.d.results[i].PercentageOfEmployeeGood);
+					$("#excellentidreadonly").val(data.d.results[i].PercentageOfEmployeesExcellence);
+					$("#acceptableidreadonly").val(data.d.results[i].PercentageOfExmployeeAcceptable);
+					$("#verygoodidreadonly").val(data.d.results[i].PercentageOfExmployeeVeryGood);
+					$("#weakidreadonly").val(data.d.results[i].PercentageOfExmployeeWeak);
+					$("#goodyidreadonly").val(data.d.results[i].PercentageOfEmployeeGoody);
+					$("#excellentyidreadonly").val(data.d.results[i].PercentageOfEmployeesExcellencey);
+					$("#acceptableyidreadonly").val(data.d.results[i].PercentageOfExmployeeAcceptabley);
+					$("#verygoodyidreadonly").val(data.d.results[i].PercentageOfExmployeeVeryGoody);
+					$("#weakyidreadonly").val(data.d.results[i].PercentageOfExmployeeWeaky);
+					$("#aatnotesid").val(data.d.results[i].CommentsByAAUnit);
+					$("#cnbnotesid").val(data.d.results[i].CommentsByCBDept);
+					$("#gmnotesid").val(data.d.results[i].CommentsByGMOffice);
+					$("#pnrnotesid").val(data.d.results[i.CommentsByPRDept]);
+					$("#pnrnotesid2").val(data.d.results[i].ReviewCommentsbyPR);
+
+
+					//}
+				}
+				getfiles(reqid);
+			}
+		});
+}
+function getfiles(reqid) {
+	var queryUrl = "http://hraes-uat/sites/eservices/_api/lists/GetByTitle('BonusRequestAttachments')/items?$select=LinkFilenameNoMenu,ID,LinkFilename,Typeofdocument,BonusRequestID&$filter=BonusRequestID eq '" + reqid + "'";
+	var data;
+	entitylogofiles = "";
+	gsfiles = "";
+	budgetfilenames = ""
+	balancenames = ""
+	financialnames = ""
+	taxnames = ""
+	contractnames = ""
+	evaluationnames = ""
+	empdetailfiles = ""
+	$.ajax
+		({
+			url: queryUrl,
+			type: "GET",
+			data: data,
+			headers:
+			{
+				"Accept": "application/json;odata=verbose",
+				"Content-Type": "application/json;odata=verbose",
+				"X-RequestDigest": $("#__REQUESTDIGEST").val(),
+				"IF-MATCH": "*",
+				"X-HTTP-Method": null
+			},
+			cache: false,
+			success: function (data) {
+				for (var i = 0; i < data.d.results.length; i++) {
+					if (data.d.results[i].Typeofdocument == "EntityLogo") {
+						entitylogofiles += "<a href='" + "http://hraes-uat/sites/eservices/BonusRequestAttachments/" + data.d.results[i].LinkFilenameNoMenu + "'>" + data.d.results[i].LinkFilenameNoMenu + "</a>;"
+					}
+					if (data.d.results[i].Typeofdocument == "GradeandSalary") {
+						gsfiles += "<a href='" + "http://hraes-uat/sites/eservices/BonusRequestAttachments/" + data.d.results[i].LinkFilenameNoMenu + "'>" + data.d.results[i].LinkFilenameNoMenu + "</a>;"
+					}
+					if (data.d.results[i].Typeofdocument == "BalanceScoreCard") {
+						balancenames += "<a href='" + "http://hraes-uat/sites/eservices/BonusRequestAttachments/" + data.d.results[i].LinkFilenameNoMenu + "'>" + data.d.results[i].LinkFilenameNoMenu + "</a>;"
+					}
+					if (data.d.results[i].Typeofdocument == "FinancialStatement") {
+						financialnames += "<a href='" + "http://hraes-uat/sites/eservices/BonusRequestAttachments/" + data.d.results[i].LinkFilenameNoMenu + "'>" + data.d.results[i].LinkFilenameNoMenu + "</a>;"
+					}
+					if (data.d.results[i].Typeofdocument == "TaxSummary") {
+						taxnames += "<a href='" + "http://hraes-uat/sites/eservices/BonusRequestAttachments/" + data.d.results[i].LinkFilenameNoMenu + "'>" + data.d.results[i].LinkFilenameNoMenu + "</a>;"
+					}
+					if (data.d.results[i].Typeofdocument == "BudgetDoc") {
+						budgetfilenames += "<a href='" + "http://hraes-uat/sites/eservices/BonusRequestAttachments/" + data.d.results[i].LinkFilenameNoMenu + "'>" + data.d.results[i].LinkFilenameNoMenu + "</a>;"
+					}
+					if (data.d.results[i].Typeofdocument == "EvaluationResults") {
+						evaluationnames += "<a href='" + "http://hraes-uat/sites/eservices/BonusRequestAttachments/" + data.d.results[i].LinkFilenameNoMenu + "'>" + data.d.results[i].LinkFilenameNoMenu + "</a>;"
+					}
+					if (data.d.results[i].Typeofdocument == "ContractDoc") {
+						contractnames += "<a href='" + "http://hraes-uat/sites/eservices/BonusRequestAttachments/" + data.d.results[i].LinkFilenameNoMenu + "'>" + data.d.results[i].LinkFilenameNoMenu + "</a>;"
+					}
+					if (data.d.results[i].Typeofdocument == "Employeedetails") {
+						empdetailfiles += "<a href='" + "http://hraes-uat/sites/eservices/BonusRequestAttachments/" + data.d.results[i].LinkFilenameNoMenu + "'>" + data.d.results[i].LinkFilenameNoMenu + "</a>;"
+					}
+					if (data.d.results[i].Typeofdocument == "CNBstudy") {
+						studyfiles += "<a href='" + "http://hraes-uat/sites/eservices/BonusRequestAttachments/" + data.d.results[i].LinkFilenameNoMenu + "'>" + data.d.results[i].LinkFilenameNoMenu + "</a>;"
+					}
+				}
+				$("#entityfilesid").append(entitylogofiles);
+				$("#Gradensalaryfilesid").append(gsfiles);
+				$("#budgetfilesid").append(budgetfilenames);
+				$("#balancefilesid").append(balancenames);
+				$("#financefilesid").append(financialnames);
+				$("#taxsummaryid").append(taxnames);
+				$("#evaluationfilesid").append(evaluationnames);
+				$("#contractfilesid").append(contractnames);
+				$("#employeefilesid").append(empdetailfiles);
+				$("#studyfileslinksid").append(studyfiles);
+			}
+
+		});
+}
+
+function savedata() {
+
+	//	var itemType = Sp.Data.BonusRequestListListItem//GetItemTypeForListName(BonusRequestList);
+	//getting login user name
+
+	Requestorjob = $("#Jobnameid").val();
+	EntityName = $("#Entitynameid").val();
+	coordinatorname = $("#coordinatornameid").val();
+	contactnumber = $("#contactnumberid").val();
+	budgetvalue = $("#budgetid").val();
+	if (budgetvalue == "") {
+		budgetvalue = 0;
+	}
+	resonstogivebonuses = $("#reasontopayid").val();
+	noofempgettingbonusses = parseInt($("#noofempgettingbonussesid").val());
+	noofemplocpricontract = parseInt($("#noofemplocpricontractid").val());
+	noofemplocpercontract = parseInt($("#noofemplocpercontractid").val());
+	noofempnonlocpricontract = parseInt($("#noofempnonlocpricontractid").val());
+	noofempnonlocpercontract = parseInt($("#noofempnonlocpercontractid").val());
+	if ($("input[name='yesno']:checked").val() == undefined) {
+		$("input[name='yesno']:checked").val("no")
+	}
+	if ($("input[name='yesno2']:checked").val() == undefined) {
+		$("input[name='yesno2']:checked").val("no")
+	}
+	budgetdocyesnoval = $("input[name='yesno']:checked").val();
+	PrivateContractyesnvalo = $("input[name='yesno2']:checked").val();
+	entityattachmentsforyearval = parseInt($("#entityattachmentsforyearid").val());
+	achivementsval = $("#achivementsid").val()
+	year1 = parseInt($("#year1id").val());
+	year2 = parseInt($("#year2id").val());
+	TotalIncome2ndYearval = parseInt($("#year1percentageid").val());
+	TotalIncomeIstYearval = parseInt($("#year2percentageid").val());
+	evaluationtotalval = parseInt($("#evaluationtotalid").val());
+
+	//percentageofemployeegood=parseInt($("#goodid").val());
+	//percentageofemployeeexcellence=parseInt($("#excellentid").val());
+	//percentageofemployeeacceptable=parseInt($("#acceptableid").val());
+	//percentageofemployeeverygood=parseInt($("#verygoodid").val());
+	//percentageofempweak=parseInt($("#weakid").val());
+
+	// percentageofemployeegoody = parseInt($("#goodyid").val());
+	// percentageofemployeeexcellencey = parseInt($("#excellentyid").val());
+	// percentageofemployeeacceptabley = parseInt($("#acceptableyid").val());
+	// percentageofemployeeverygoody = parseInt($("#verygoodyid").val());
+	// percentageofempweaky = parseInt($("#weakyid").val());
+
+
+	RequestIDwithlink = "http://hraes-uat/sites/eservices/Pages/BonusRequestform.aspx" + "?" + RequestID;
+	emailid = $("#emailid").val();
+	var metadata =
+	{
+		__metadata:
+		{
+			'type': 'SP.Data.BonusRequestListListItem'
+		},
+
+		Company: EntityName,
+		JobTitle: Requestorjob,
+		CoordinatorName: coordinatorname,
+		WorkPhone: contactnumber,
+		EMail: emailid,
+		RequestorName: Requestorname,
+		//	IssueDate: issueDate,
+		BudgetValue: budgetvalue,
+		// ReasonsToGiveBonuses: resonstogivebonuses,
+		NoOfEmpGettingBonus: noofempgettingbonusses,
+		budgetdocyesno: budgetdocyesnoval,
+		PrivateContractyesno: PrivateContractyesnoval,
+		entityattachmentsforyear: entityattachmentsforyearval,
+		//	achivements: achivementsval,
+		NumberOfLocals: noofemplocpricontract,
+		NumberOfNonLocals: noofempnonlocpricontract,
+		Nooflocalswithpermanent: noofemplocpercontract,
+		Noofnonlocalswithpermanent: noofempnonlocpercontract,
+		Totalincomeyear1: year1,
+		Totalincomeyear2: year2,
+		TotalIncome2ndYear: TotalIncome2ndYearval,
+		TotalIncomeIstYear: TotalIncomeIstYearval,
+		//evaluationtotal: evaluationtotalval,
+		PercentageOfEmployeeGood: percentageofemployeegood,
+		PercentageOfEmployeesExcellence: percentageofemployeeexcellence,
+		PercentageOfExmployeeAcceptable: percentageofemployeeacceptable,
+		PercentageOfExmployeeVeryGood: percentageofemployeeverygood,
+		PercentageOfExmployeeWeak: percentageofempweak,
+		PercentageOfEmployeeGoody: percentageofemployeegoody,
+		PercentageOfEmployeesExcellencey: percentageofemployeeexcellencey,
+		PercentageOfExmployeeAcceptabley: percentageofemployeeacceptabley,
+		PercentageOfExmployeeVeryGoody: percentageofemployeeverygoody,
+		PercentageOfExmployeeWeaky: percentageofempweaky,
+		BonusReqestID: RequestID,
+		Requestidwithlink: { Url: RequestIDwithlink, Description: RequestID }
+		//RequestStatus:RequestStatus,
+		//ApprovedRejectByAAUnit:Outcome,
+		//ApprovedRejectByCBDept:Outcome,
+		//ApprovedRejectByGMOffice:Outcome,
+		//ApprovedRejectByPRDept:Outcome,
+		// CommentsByAAUnit: $("#aatnotesid").val(),
+		// CommentsByCBDept: $("#cnbnotesid").val(),
+		// CommentsByGMOffice: $("#gmnotesid").val(),
+		// CommentsByPRDept: $("#pnrnotesid").val(),
+		// ReviewCommentsbyPR: $("#pnrnotesid2").val(),
+		//ReviewedByPRDept:Outcome
+
+	};
+
+	//Requestidwithlink:{
+	//  '__metadata': { 'type': 'SP.FieldUrlValue' },
+	// 'Description': RequestIDwithlink,
+	// 'Url': RequestIDwithlink
+	// },
+	var queryUrl = "http://hraes-uat/sites/eservices/_api/lists/GetByTitle('BonusRequestList')/items";
+	$.ajax({
+		url: queryUrl,
+		type: "POST",
+		contentType: "application/json;odata=verbose",
+		data: JSON.stringify(metadata),
+		headers: {
+			"accept": "application/json;odata=verbose",
+			"X-RequestDigest": $("#__REQUESTDIGEST").val()
+
+		},
+		success: function (data) {
+			//alert("success");
+			//window.locatioin.href="http://hraes-uat/sites/eservices/Pages/homepage.aspx";
+			//window.location.replace("http://hraes-uat/sites/eservices/Pages/homepage.aspx");
+			//window.location("http://hraes-uat/sites/eservices/Pages/homepage.aspx");
+			this.IDofNewItem=data.d.ID;
+			alert("List item is save successfully"+data.d.ID);
+			SP.SOD.executeFunc('sp.js', 'SP.ClientContext', createFile);
+		},
+		error: function (data) {
+			alert("failed");
+			$("#myModal").show();
+		}
+	});
+
+
+}
+function getemail() {
+	var userid = _spPageContextInfo.userId;
+	var requestUri = _spPageContextInfo.webAbsoluteUrl + "/_api/web/getuserbyid(" + userid + ")";
+	var requestHeaders = { "accept": "application/json;odata=verbose" };
+	$.ajax({
+		url: requestUri,
+		contentType: "application/json;odata=verbose",
+		headers: requestHeaders,
+		success: onSuccess1,
+		error: onError1
+	});
+	function onSuccess1(data, request) {
+
+		emailid = data.d.Email;
+		//alert(email);
+		return emailid;
+	}
+
+	function onError1(error) {
+		alert("error");
+	}
+}
+function getusername() {
+
+	var userid = _spPageContextInfo.userId;
+	var requestUri = _spPageContextInfo.webAbsoluteUrl + "/_api/web/getuserbyid(" + userid + ")";
+	var requestHeaders = { "accept": "application/json;odata=verbose" };
+	$.ajax({
+		url: requestUri,
+		contentType: "application/json;odata=verbose",
+		headers: requestHeaders,
+		success: onSuccess,
+		error: onError
+	});
+
+	function onSuccess(data, request) {
+		Requestorname = data.d.Title;
+		email = data.d.Email;
+		//alert(email);
+		return Requestorname;
+	}
+
+	function onError(error) {
+		alert("error");
+	}
+}
+
+function createFile() {
+	//SP.SOD.executeFunc('sp.js', 'SP.ClientContext', createFile);
+	fileinput = $("#Gradensalaryid");
+	element = document.getElementById("Gradensalaryid");
+	elementlogo = document.getElementById("Entitylogofileid");
+	elementbalancescorecard = document.getElementById("balancescorecardid");
+	elementfinancialstatement = document.getElementById("financialstatementid");
+	elementtaxsummary = document.getElementById("taxsummaryid");
+	elementbudget = document.getElementById("budgetdocid");
+	elementevaluation = document.getElementById("resultsofevaluationid");
+	elementcontrats = document.getElementById("allcontractsid");
+	elementempdetails = document.getElementById("Employeedetailsid");
+	elementstudydetails = document.getElementById("stydyfileid");
+	// This is monica code 
+	// for (var i = 0; i < elementlogo.files.length; i++) {
+
+	// 	if(removedArrayEntityLogo.indexOf(elementlogo.files.item(i).name) == -1){
+			
+	// 		fileuploadfunc(elementlogo, "EntityLogo", i);
+
+	// 	}
+		
+	// }
+	// Israr code data 3/5/2019
+
+	upload(elementlogo, "EntityLogo",this.IDofNewItem);
+	// for (var i = 0; i < elementlogo.files.length; i++) {
+	// 	// Check if the file is not removed by the user , all the remove files goes to this removedArrayEntityLogo array
+	// 	try{
+	// 		if(removedArrayEntityLogo.indexOf(elementlogo.files[i].name) == -1){
+				
+	// 		//	fileuploadfunc(elementlogo, "EntityLogo", i,this.IDofNewItem);
+	// 			upload(elementlogo, "EntityLogo", i,this.IDofNewItem);
+
+	// 		}
+	// 	}
+	// 	catch(err){
+
+
+	// 	}
+		
+	// }
+	// for (var i = 0; i < element.files.length; i++) {
+
+	// 	if(removedArrayGradensalaryid.indexOf(element.files.item(i).name) == -1){
+
+	// 		fileuploadfunc(element, "GradeandSalary", i);
+
+	// 	}
+		
+	// }
+
+	// for (var i = 0; i < element.files.length; i++) {
+
+	// 	if(removedArrayGradensalaryid.indexOf(element.files[i].name) == -1){
+
+	// 		fileuploadfunc(element, "GradeandSalary", i,IDofNewItem);
+
+	// 	}
+		
+	// }
+	
+	// for (var i = 0; i < elementbalancescorecard.files.length; i++) {
+
+	// 	if(removedArraybalancescorecardid.indexOf(element.files.item(i).name) == -1){
+
+	// 		fileuploadfunc(elementbalancescorecard, "BalanceScoreCard", i);
+
+	// 	}
+		
+	// }
+
+		// for (var i = 0; i < elementbalancescorecard.files.length; i++) {
+
+		// 	if(removedArraybalancescorecardid.indexOf(element.files[i].name) == -1){
+
+		// 		fileuploadfunc(elementbalancescorecard, "BalanceScoreCard",i, IDofNewItem);
+
+		// 	}
+		
+		// }
+
+
+
+	// for (var i = 0; i < elementfinancialstatement.files.length; i++) {
+
+	// 	if(removedArrayfinancialstatementid.indexOf(element.files[i].name) == -1){
+
+	// 		fileuploadfunc(elementfinancialstatement, "FinancialStatement", i,IDofNewItem);
+
+	// 	}
+		
+	//  }
+	// for (var i = 0; i < elementtaxsummary.files.length; i++) {
+
+	// 	if(removedArraytaxsummaryid.indexOf(element.files[i].name) == -1){
+
+	// 		fileuploadfunc(elementtaxsummary, "TaxSummary", i,IDofNewItem);
+
+	// 	}
+
+	// }
+	// for (var i = 0; i < elementbudget.files.length; i++) {
+
+	// 	if(removedArraybudgetdocid.indexOf(element.files[i].name) == -1){
+
+	// 		fileuploadfunc(elementbudget, "BudgetDoc", i,IDofNewItem);
+
+	// 	}
+		
+	// }
+	// for (var i = 0; i < elementevaluation.files.length; i++) {
+
+	// 	if(removedArrayresultsofevaluationid.indexOf(element.files[i].name) == -1){
+
+	// 		fileuploadfunc(elementevaluation, "EvaluationResults", i,IDofNewItem);
+
+	// 	}
+		
+	// }
+	// for (var i = 0; i < elementcontrats.files.length; i++) {
+
+	// 	if(removedArrayallcontractsid.indexOf(element.files[i].name) == -1){
+
+	// 		fileuploadfunc(elementcontrats, "ContractDoc", i,IDofNewItem);
+
+	// 	}
+		
+	// }
+	// for (var i = 0; i < elementempdetails.files.length; i++) {
+
+	// 	if(removedArrayEmployeedetailsid.indexOf(element.files[i].name) == -1){
+
+	// 		fileuploadfunc(elementempdetails, "Employeedetails", i,IDofNewItem);
+
+	// 	}
+
+	// }
+	// for (var i = 0; i < elementstudydetails.files.length; i++) {
+
+	// 	if(removedArraystydyfileid.indexOf(element.files[i].name) == -1){
+
+	// 		fileuploadfunc(elementstudydetails, "CNBstudy", i,IDofNewItem);
+
+	// 	}
+		
+	// }
+}
+function upload(fileInput, filetype,new_req_id) {
+    // Define the folder path for this example.
+    var serverRelativeUrlToFolder = 'SiteAssets';
+
+    // Get test values from the file input and text input page controls.
+    // var fileInput = jQuery('#getFile');
+    // var newName = jQuery('#displayName').val();
+    var fileCount = fileInput.files.length;
+    // Get the server URL.
+    var serverUrl = _spPageContextInfo.webAbsoluteUrl;
+    var filesUploaded = 0;
+    for(var i = 0; i < fileCount; i++){
+        // Initiate method calls using jQuery promises.
+        // Get the local file as an array buffer.
+        var getFile = getFileBuffer(fileInput[i],i);
+        getFile.done(function (arrayBuffer,i) {
+
+            // Add the file to the SharePoint folder.
+            var addFile = addFileToFolder(arrayBuffer,i,serverUrl,serverRelativeUrlToFolder);
+            addFile.done(function (file, status, xhr) {
+                //$("#msg").append("<div>File : "+file.d.Name+" ... uploaded sucessfully</div>");
+                filesUploaded++;
+                if(fileCount == filesUploaded){
+                    alert("All files uploaded successfully");
+                    //$("#msg").append("<div>All files uploaded successfully</div>");
+                  	//  $("#getFile").value = null;
+                    filesUploaded = 0;
+                }
+            });
+            addFile.fail(onError);
+        });
+        getFile.fail(onError);
+
+	}
+}
+
+function getFileBuffer(fileInput,i) {
+	var deferred = jQuery.Deferred();
+	var reader = new FileReader();
+	reader.onloadend = function (e) {
+		deferred.resolve(e.target.result,i);
+	}
+	reader.onerror = function (e) {
+		deferred.reject(e.target.error);
+	}
+	reader.readAsArrayBuffer(fileInput.files[i]);
+	return deferred.promise();
+}
+
+
+function addFileToFolder(arrayBuffer,i,serverUrl,serverRelativeUrlToFolder) {
+    var index = i;
+
+        // Get the file name from the file input control on the page.
+        var fileName = fileInput[0].files[index].name;
+
+        // Construct the endpoint.
+        var fileCollectionEndpoint = String.format(
+                "{0}/_api/web/getfolderbyserverrelativeurl('{1}')/files" +
+                "/add(overwrite=true, url='{2}')",
+                serverUrl, serverRelativeUrlToFolder, fileName);
+
+        // Send the request and return the response.
+        // This call returns the SharePoint file.
+        return jQuery.ajax({
+            url: fileCollectionEndpoint,
+            type: "POST",
+            data: arrayBuffer,
+            processData: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+                "X-RequestDigest": jQuery("#__REQUESTDIGEST").val(),
+                "content-length": arrayBuffer.byteLength
+            }
+        });
+    }
+
+
+
+// function fileuploadfunc(ele, filetype, i,new_req_id) {
+// 	var fileName = "";
+// 	var file = ele.files[i];
+// 	var parts = ele.value.split("\\");
+// 	//fileName = parts[parts.length - 1]; 
+// 	fileName = file.name;
+// 	//alert(fileName);
+// 	var nameoffile = fileName.split('.')[0];
+// 	var extension = fileName.split('.')[1];
+// 	fileName = nameoffile + "_" + RequestID + "." + extension;
+
+// 	//Read File contents using file reader  
+// 	var reader = new FileReader();
+// 	reader.onload = function (e) {
+// 		uploadFile(e.target.result, fileName, filetype,new_req_id);
+// 	}
+// 	reader.onerror = function (e) {
+// 		alert(e.target.error);
+// 	}
+// 	reader.readAsArrayBuffer(file, "UTF-8");
+// }
+
+function uploadFile(arrayBuffer, fileName, filetype,new_req_id) {
+	//Get Client Context,Web and List object.  
+	var clientContext = new SP.ClientContext();
+	var oWeb = clientContext.get_web();
+	var oList = oWeb.get_lists().getByTitle('BonusRequestAttachments');
+	//Convert the file contents into base64 data  
+	var bytes = new Uint8Array(arrayBuffer);
+	var i, length, out = '';
+	for (i = 0, length = bytes.length; i < length; i += 1) {
+		out += String.fromCharCode(bytes[i]);
+	}
+	var base64 = btoa(out);
+	//Create FileCreationInformation object using the read file data  
+	var createInfo = new SP.FileCreationInformation();
+	createInfo.set_content(base64);
+	createInfo.set_overwrite(true)
+	createInfo.set_url(fileName);
+
+
+	//Add the file to the library  
+	var uploadedDocument = oList.get_rootFolder().get_files().add(createInfo);
+
+	//Load client context and execcute the batch  
+	
+	//clientContext.executeQueryAsync(function () { onsuccesss(fileName, filetype) }, onfailureee);
+	
+	// uploadedDocument.get_listItemAllFields["Typeofdocument"] = filetype;
+	// // uploadedDocument.get_listItemAllFields["BonusReqest_x002d_ID"] = IDofNewItem;
+	// uploadedDocument.get_listItemAllFields["BonusReqest_x002d_ID"] = 103;
+	// //BonusRequestID
+	// uploadedDocument.get_listItemAllFields["BonusRequestID"] = 103;
+	// //clientContext.load(uploadedDocument);
+	// uploadedDocument.update();
+	
+	//uploadedDocument.Update();
+	//uploadedDocument.ListItemAllFields.Update();
+	//uploadedDocument.get_listItemAllFields["Typeofdocument"]=filetype;
+	
+	//clientContext.load(uploadedDocument);  
+
+	var oListItem = uploadedDocument.get_listItemAllFields();
+	oListItem.set_item('Typeofdocument',filetype );
+	console.log("ID of new item"+IDofNewItem);
+    oListItem.set_item('BonusRequestID',new_req_id );
+	oListItem.set_item('BonusReqest_x002d_ID',new_req_id);
+	//oListItem.set_item('BonusReqest_x002d_ID',IDofNewItem );
+	//BonusReqest_x002d_ID
+	// oListItem.set_item('InternalName', "Some Data");
+	oListItem.update();
+	clientContext.load(uploadedDocument);
+	//clientContext.executeQueryAsync(function (){QuerySuccess(filetype,uploadedDocument);}, QueryFailure); 
+	// clientContext.executeQueryAsync(function (data)
+	//  { 
+		 
+	// 	alert("file is saved successfully") 
+	
+	
+	//  }, 
+	//  function(err){alert("File could not create and saved!")});
+
+
+}
+	function fileCreatedSuccess(fileName,fileType){
+		alert("File is uploaded successfully ");
+	}
+	function fileCreatedError(args){
+
+		alert("Somthin goes wrong and file could not uploaded successfuly nat line 3159");
+
+	}
+
+	function onsuccesss(fileName, filetype) {
+
+		var queryUrl = "http://hraes-uat/sites/eservices/_api/lists/GetByTitle('BonusRequestAttachments')/items?$select=LinkFilenameNoMenu,ID";
+		var data;
+
+		$.ajax
+			({
+				url: queryUrl,
+				type: "GET",
+				data: data,
+				headers:
+				{
+					"Accept": "application/json;odata=verbose",
+					"Content-Type": "application/json;odata=verbose",
+					"X-RequestDigest": $("#__REQUESTDIGEST").val(),
+					"IF-MATCH": "*",
+					"X-HTTP-Method": null
+				},
+				cache: false,
+				success: function (data) {
+					//alert("hiii");
+					for (var i = 0; i < data.d.results.length; i++) {
+						var filefullname = data.d.results[i].LinkFilenameNoMenu;
+						// var name=filefullname.split('.')[0];
+						if (fileName == filefullname) {
+							var id = data.d.results[i].ID;
+							var metadata2 =
+							{
+								__metadata:
+								{
+									'type': 'SP.Data.BonusRequestAttachmentsItem'
+								},
+
+								BonusRequestID: RequestID,
+								Typeofdocument: filetype,
+							};
+							var queryUrl = "http://hraes-uat/sites/eservices/_api/lists/GetByTitle('BonusRequestAttachments')/items(" + id + ")";
+							$.ajax({
+								url: queryUrl,
+								type: "POST",
+								contentType: "application/json;odata=verbose",
+								data: JSON.stringify(metadata2),
+								headers: {
+									"accept": "application/json;odata=verbose",
+									"X-RequestDigest": $("#__REQUESTDIGEST").val(),
+									"content-Type": "application/json;odata=verbose",
+									"IF-MATCH": "*",
+									"X-HTTP-Method": "MERGE"
+
+								},
+								success: function (data) {
+									//alert("success2");
+									//SP.SOD.executeFunc('sp.js', 'SP.ClientContext', createFile);
+								},
+								error: function (data) {
+									alert("failed");
+								}
+							});
+						}
+					}
+				},
+				error: function (data) {
+
+				}
+			});
+	// window.location.replace("http://hraes-uat/sites/eservices/Pages/homepage.aspx");
+}
+function onfailureee() { alert('Unable to upload File') }
+
+function validation() {
+
+	if ($("#Entitynameid").val() == "") {
+		errorval += "Entity Name; ";
+		validationflag = 1;
+	}
+	if ($("#coordinatornameid").val() == "") {
+		errorval += "Coordinator Name; ";
+		validationflag = 1;
+	}
+	if ($("#Jobnameid").val() == "") {
+		errorval += "Job Name; ";
+		validationflag = 1;
+	}
+	if ($("#contactnumberid").val() == "") {
+		errorval += "Contact Number; ";
+		validationflag = 1;
+	}
+	if ($("#emailid").val() == "") {
+		errorval += "Email; ";
+		validationflag = 1;
+	}
+	if ($("#reasontopayid").val() == "") {
+		errorval += "Reasons to pay Bonuses; ";
+		validationflag = 1;
+	}
+	if ($("#entityattachmentsforyearid").val() == "") {
+		errorval += "Entity Year; ";
+		validationflag = 1;
+	}
+	if ($("#achivementsid").val() == "") {
+		errorval += "Achivements; ";
+		validationflag = 1;
+	}
+	if ($("#noofempgettingbonussesid").val() == "") {
+		errorval += "Total Employees of Entity; ";
+		validationflag = 1;
+	}
+	if ($("#noofempgettingbonussesid").val() <= 0) {
+		errorval += "Total Employees of Entity; ";
+		validationflag = 1;
+	}
+	if ($("#noofemplocpricontractid").val() == "") {
+		errorval += "Total number of locals with private contract; ";
+		validationflag = 1;
+	}
+	if ($("#noofemplocpercontractid").val() == "") {
+		errorval += "Total number of locals with permanent contract; ";
+		validationflag = 1;
+	}
+	if ($("#noofempnonlocpricontractid").val() == "") {
+		errorval += "Total number of non locals with private contract; ";
+		validationflag = 1;
+	}
+	if ($("#noofempnonlocpercontractid").val() == "") {
+		errorval += "Total number of non locals with permanent contract; ";
+		validationflag = 1;
+	}
+	if ($("#year1id").val() == "") {
+		errorval += "Percentage of Emiratisation first year; ";
+		validationflag = 1;
+	}
+	if ($("#year2id").val() == "") {
+		errorval += "Percentage of Emiratisation second year; ";
+		validationflag = 1;
+	}
+	if ($("#year1percentageid").val() == "") {
+		errorval += "Percentage of Emiratisation for first year; ";
+		validationflag = 1;
+	}
+	if ($("#year2percentageid").val() == "") {
+		errorval += "Percentage of Emiratisation for first year; ";
+		validationflag = 1;
+	}
+	if ($("#evaluationtotalid").val() == "") {
+		errorval += "Evaluation performance with details; ";
+		validationflag = 1;
+	}
+	if ($("#excellentidy").val() == "") {
+		errorval += "Total entity employees with Excellent grade; ";
+		validationflag = 1;
+	}
+	if ($("#verygoodidy").val() == "") {
+		errorval += "Total entity employees with Very Good grade; ";
+		validationflag = 1;
+	}
+	if ($("#goodidy").val() == "") {
+		errorval += "Total entity employees with Good grade; ";
+		validationflag = 1;
+	}
+	if ($("#acceptableidy").val() == "") {
+		errorval += "Total entity employees with Acceptable grade; ";
+		validationflag = 1;
+	}
+	if ($("#weakidy").val() == "") {
+		errorval += "Total entity employees with Weak grade; ";
+		validationflag = 1;
+	}
+
+}
+
+function updatedata(reqid) {
+
+
+	//	var itemType = Sp.Data.BonusRequestListListItem//GetItemTypeForListName(BonusRequestList);
+	//getting login user name
+
+	Requestorjob = $("#Jobnameid").val();
+	EntityName = $("#Entitynameid").val();
+	coordinatorname = $("#coordinatornameid").val();
+	contactnumber = $("#contactnumberid").val();
+	budgetvalue = $("#budgetid").val();
+	if (budgetvalue == "") {
+		budgetvalue = 0;
+	}
+	resonstogivebonuses = $("#reasontopayid").val();
+	noofempgettingbonusses = parseInt($("#noofempgettingbonussesid").val());
+	noofemplocpricontract = parseInt($("#noofemplocpricontractid").val());
+	noofemplocpercontract = parseInt($("#noofemplocpercontractid").val());
+	noofempnonlocpricontract = parseInt($("#noofempnonlocpricontractid").val());
+	noofempnonlocpercontract = parseInt($("#noofempnonlocpercontractid").val());
+	if ($("input[name='yesno']:checked").val() == undefined) {
+		$("input[name='yesno']:checked").val("no")
+	}
+	if ($("input[name='yesno2']:checked").val() == undefined) {
+		$("input[name='yesno2']:checked").val("no")
+	}
+	budgetdocyesnoval = $("input[name='yesno']:checked").val();
+	PrivateContractyesnvalo = $("input[name='yesno2']:checked").val();
+	entityattachmentsforyearval = parseInt($("#entityattachmentsforyearid").val());
+	achivementsval = $("#achivementsid").val()
+	year1 = parseInt($("#year1id").val());
+	year2 = parseInt($("#year2id").val());
+	TotalIncome2ndYearval = parseInt($("#year1percentageid").val());
+	TotalIncomeIstYearval = parseInt($("#year2percentageid").val());
+	evaluationtotalval = parseInt($("#evaluationtotalid").val());
+
+	//percentageofemployeegood=parseInt($("#goodid").val());
+	//percentageofemployeeexcellence=parseInt($("#excellentid").val());
+	//percentageofemployeeacceptable=parseInt($("#acceptableid").val());
+	//percentageofemployeeverygood=parseInt($("#verygoodid").val());
+	//percentageofempweak=parseInt($("#weakid").val());
+	percentageofemployeegoody = parseInt($("#goodyid").val());
+	percentageofemployeeexcellencey = parseInt($("#excellentyid").val());
+	percentageofemployeeacceptabley = parseInt($("#acceptableyid").val());
+	percentageofemployeeverygoody = parseInt($("#verygoodyid").val());
+	percentageofempweaky = parseInt($("#weakyid").val());
+
+
+	//	RequestIDwithlink = "http://hraes-uat/sites/eservices/Pages/BonusRequestform.aspx" + "?" + RequestID;
+	RequestIDwithlink = "http://hraes-uat/sites/eservices/Pages/BonusRequestform.aspx" + "?" + reqid;
+	emailid = $("#emailid").val();
+	var metadata =
+	{
+		__metadata:
+		{
+			'type': 'SP.Data.BonusRequestListListItem'
+		},
+
+		Company: EntityName,
+		JobTitle: Requestorjob,
+		CoordinatorName: coordinatorname,
+		WorkPhone: contactnumber,
+		EMail: emailid,
+		RequestorName: Requestorname,
+		IssueDate0: issueDate,
+		BudgetValue: budgetvalue,
+		ReasonsToGiveBonuses: resonstogivebonuses,
+		NoOfEmpGettingBonus: noofempgettingbonusses,
+		budgetdocyesno: budgetdocyesnoval,
+		PrivateContractyesno: PrivateContractyesnoval,
+		entityattachmentsforyear: entityattachmentsforyearval,
+		achivements: achivementsval,
+		NumberOfLocals: noofemplocpricontract,
+		NumberOfNonLocals: noofempnonlocpricontract,
+		Nooflocalswithpermanent: noofemplocpercontract,
+		Noofnonlocalswithpermanent: noofempnonlocpercontract,
+		Totalincomeyear1: year1,
+		Totalincomeyear2: year2,
+		TotalIncome2ndYear: TotalIncome2ndYearval,
+		TotalIncomeIstYear: TotalIncomeIstYearval,
+		evaluationtotal: evaluationtotalval,
+		PercentageOfEmployeeGood: percentageofemployeegood,
+
+		// above is done the below has issue
+		PercentageOfEmployeesExcellence: percentageofemployeeexcellence,
+		PercentageOfExmployeeAcceptable: percentageofemployeeacceptable,
+		PercentageOfExmployeeVeryGood: percentageofemployeeverygood,
+		PercentageOfExmployeeWeak: percentageofempweak,
+		PercentageOfEmployeeGoody: percentageofemployeegoody,
+		PercentageOfEmployeesExcellencey: percentageofemployeeexcellencey,
+		PercentageOfExmployeeAcceptabley: percentageofemployeeacceptabley,
+		PercentageOfExmployeeVeryGoody: percentageofemployeeverygoody,
+		PercentageOfExmployeeWeaky: percentageofempweaky,
+
+		// Requestidwithlink: { Url: RequestIDwithlink, Description: reqid },
+		//RequestStatus:RequestStatus,
+		// not checke below
+		//RequestID:RequestID,
+		// ApprovedRejectByAAUnit:Outcome,
+		// ApprovedRejectByCBDept:Outcome,
+		// ApprovedRejectByGMOffice:Outcome,
+		// ApprovedRejectByPRDept:Outcome,
+		CommentsByAAUnit: $("#aatnotesid").val(),
+		CommentsByCBDept: $("#cnbnotesid").val(),
+		CommentsByGMOffice: $("#gmnotesid").val(),
+		CommentsByPRDept: $("#pnrnotesid").val(),
+		ReviewCommentsbyPR: $("#pnrnotesid2").val(),
+		ReviewedByPRDept: Outcome
+
+	};
+
+	//Requestidwithlink:{
+	//  '__metadata': { 'type': 'SP.FieldUrlValue' },
+	// 'Description': RequestIDwithlink,
+	// 'Url': RequestIDwithlink
+	// },
+	//	var queryUrl = "http://hraes-uat/sites/eservices/_api/lists/GetByTitle('BonusRequestList')/items(" + reqid + ")";
+
+	var queryUrl = "http://hraes-uat/sites/eservices/_api/lists/GetByTitle('BonusRequestList')/items(" + reqid + ")";
+	$.ajax({
+		url: queryUrl,
+		type: "POST",
+		contentType: "application/json;odata=verbose",
+		data: JSON.stringify(metadata),
+		headers: {
+			"accept": "application/json;odata=verbose",
+			"X-RequestDigest": $("#__REQUESTDIGEST").val(),
+			"X-HTTP-Method": "MERGE",
+			"IF-MATCH": "*",
+
+		},
+		success: function (data) {
+			alert("Bonus Request Data is successfully updated");
+			window.location.replace("http://hraes-uat/sites/eservices/Pages/homepage.aspx");
+			//SP.SOD.executeFunc('sp.js', 'SP.ClientContext', createFile);
+		},
+
+		error: function (data) {
+			alert("Bonus Request Data could not completed Successfully " + JSON.stringify(data));
+		}
+	});
+
+
+}
+
+
+
+
