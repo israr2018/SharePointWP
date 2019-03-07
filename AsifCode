@@ -1,0 +1,31 @@
+$(document).ready(function() {
+    initializePeoplePicker("_UserReportingManager");
+    initializePeoplePicker("_UserAreaManager");
+    initializePeoplePicker("_UserReplacement");
+});
+
+function initializePeoplePicker(peoplePickerElementId) {
+    var schema = {};
+    schema['PrincipalAccountType'] = 'User';
+    schema['SearchPrincipalSource'] = 15;
+    schema['ResolvePrincipalSource'] = 15;
+    schema['AllowMultipleValues'] = false;
+    schema['MaximumEntitySuggestions'] = 50;
+    schema['Width'] = '230px';
+
+    this.SPClientPeoplePicker_InitStandaloneControlWrapper(peoplePickerElementId, null, schema);
+}
+
+
+function ensureUser(User) {
+	var peoplePickerTopDivId = $(User).children().children().attr('id');
+    var peoplePicker = this.SPClientPeoplePicker.SPClientPeoplePickerDict[peoplePickerTopDivId];
+	var users = peoplePicker.GetAllUserInfo();
+	var arryuser = users[0];
+	
+	if(arryuser) {
+	return arryuser.Key;
+	}
+    
+
+}
