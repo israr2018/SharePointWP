@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<script type="text/javascript">
+$(document).ready(function(){
+    // Check for FileReader API (HTML5) support.  
+    if (!window.FileReader) {  
+        alert(' FileReader API does not support Your Current Browser.');  
+    }  
+  
+$("#btn-upload").click(function(){
+    alert("clicked....")
+    upload();
+});
+});
+    function upload() {
+    // Define the folder path for this example.
+    var serverRelativeUrlToFolder = 'SiteAssets';
+    // Get test values from the file input and text input page controls.
+    var fileInput = jQuery('#test-files');
+   
+    var fileCount = fileInput[0].files.length;
+    // Get the server URL.
+    var serverUrl = _spPageContextInfo.webAbsoluteUrl;
+    var filesUploaded = 0;
+     for(var i = 0; i < fileCount; i++){
+        // Initiate method calls using jQuery promises.
+        // Get the local file as an array buffer.
+        // getFileBuffer(fileInput[0].files[i]);
+       //var getFile = getFileBuffer(fileInput[0].files[0]);
+        getFileBuffer(fileInput[0].files[i]).done(function(result) {
+            // Add the file to the SharePoint folder.
+            
+            console.log("get file done......"+result.filename);
+           // var addFile = addFileToFolder(arrayBuffer,serverUrl,serverRelativeUrlToFolder,fileInput[0].files[i].name);
+           addFileToFolder(result.content,serverUrl,serverRelativeUrlToFolder,result.filename).done(function (data) {
+                //$("#msg").append("<div>File : "+file.d.Name+" ... uploaded sucessfully</div>");
+                console.log(JSON.stringify(data));
+                filesUploaded++;
+                console.log("file upploaded !");
+                if(fileCount == filesUploaded){
+                    alert("All files uploaded successfully");
+                    //$("#msg").append("<div>All files uploaded successfully</div>");
+                    // $("#getFile").value = null;
+                    filesUploaded = 0;
+                }
+            })
+            .fail(function(err2){
+                console.log("error2"+err2.responseText);
+            });
+             })
+        .fail(function(err1){
+
+
+             });
+     
+    }
+
+}
+  
+    // Get the local file as an array buffer.
+    function getFileBuffer(file) {
+        console.log("getFileBuffer...");
+        var deferred = jQuery.Deferred();
+        var reader = new FileReader(file);
+        // deferred.resolve("Success");
+        // deferred.reject("Error");
+        
+        reader.onloadend = function (e) { 
+            console.log("...sucess") ;
+           //deferred.resolve(e.target.result);  
+           var result = {'filename': file.name, 'content': e.target.result };
+           deferred.resolve(result); 
+        }
+        //  reader.onload = function (e) {
+        //      console.log("success");
+        //     deferred.resolve(e.target.result);
+        // }
+        reader.onerror = function (e) {
+            console.log("error...");
+          // deferred.reject(e.target.error);
+           deferred.reject("Error");
+        }
+    //    // reader.readAsArrayBuffer(fileInput[0].files[i]);
+       reader.readAsArrayBuffer(file);
+        return deferred.promise();
+    }
+    // Add the file to the file collection in the Shared Documents folder.
+    function addFileToFolder(content,serverUrl,serverRelativeUrlToFolder,fileName) {
+        console.log("fileName====="+fileName);
+        // var index = i;
+        // Get the file name from the file input control on the page.
+       // var fileName = fileInput[0].files[index].name;
+        // Construct the endpoint.
+        var dfd = jQuery.Deferred();
+        var fileCollectionEndpoint = String.format(
+                "{0}/_api/web/getfolderbyserverrelativeurl('{1}')/files" +
+                "/add(overwrite=true, url='{2}')",
+                serverUrl, serverRelativeUrlToFolder, fileName);
+        // Send the request and return the response.
+        // This call returns the SharePoint file.
+        //"content-length": result.byteLength
+        return jQuery.ajax({
+            url: fileCollectionEndpoint,
+            type: "POST",
+            data: content,
+            processData: false,
+            headers: {
+                "accept": "application/json;odata=verbose",
+                "X-RequestDigest": jQuery("#__REQUESTDIGEST").val(),
+                "content-length": content.byteLength
+               
+            },
+            'success': function (data) {
+               var d = data;
+               dfd.resolve(d);
+           },
+           'error': function (err) {
+               dfd.reject(err);
+           }
+       }
+        );
+    }
+    function updateMetadata(fileUrl) {
+ 
+        // appweburl = decodeURIComponent(getQueryStringParameter('SPAppWebUrl'));
+        // hostweburl = decodeURIComponent(getQueryStringParameter('SPHostUrl'));
+        // var restSource = appweburl +
+        //     "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Documents')/rootfolder/files/getbyurl(url='" + fileUrl + "')/listitemallfields?@target='" + hostweburl + "'";
+        var serverUrl = _spPageContextInfo.webAbsoluteUrl;
+        var restUrl=serverUrl+"/_api/web/lists/getbytitle('AssettsLibrary')/rootfolder/files/getbyurl(url='"+fileUrl+"')/listitemallfields"
+       
+        var dfd = $.Deferred();
+
+         $.ajax(
+            {
+            'url': restSource,
+            'method': 'POST',
+            'data': JSON.stringify({
+                '__metadata': {'type':'SP.ListItem'},
+                'Title': 'My Title 3'
+            }),
+            'headers': {
+                'accept': 'application/json;odata=verbose',
+                'content-type': 'application/json;odata=verbose',
+                'X-RequestDigest': $('#__REQUESTDIGEST').val(),
+                'X-Http-Method': 'PATCH',
+                "If-Match": "*"
+            },
+            'success': function (data) {
+                var d = data;
+                dfd.resolve();
+            },
+            'error': function (err) {
+                dfd.reject();
+            }
+        }
+        );
+
+ return dfd;
+
+}
+</script>
+<body>
+
+
+<input type="file" name="file" id="test-files" multiple>
+<input type="button" value="upload" id="btn-upload">
+
+
+
+
+</body>
+</html>
